@@ -1,6 +1,7 @@
 package vangoh74.backend.model;
 
 public enum Rank {
+
     ACE(1),
     TWO(2),
     THREE(3),
