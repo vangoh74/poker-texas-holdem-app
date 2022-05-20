@@ -20,6 +20,6 @@ public class TableItem {
 
     @Id
     private String id;
-    private String hallo;
+    private int roundNbr;
     private List<Optional<Card>> tableCards;
 }
