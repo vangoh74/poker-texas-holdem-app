@@ -26,7 +26,7 @@ public class TableItemsService {
         return tableItemsRepository.getTableItems();
     }
 
-    public TableItem postNewTableItem(TableItem newTableItem) {
+    public TableItem addNewTableItem(TableItem newTableItem) {
         String randomId = idService.generateId();
         newTableItem.setId(randomId);
 

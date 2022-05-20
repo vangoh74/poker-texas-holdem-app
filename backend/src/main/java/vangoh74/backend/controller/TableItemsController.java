@@ -23,6 +23,6 @@ public class TableItemsController {
 
     @PostMapping
     public TableItem postNewTableItem(@RequestBody TableItem newTableItem) {
-        return tableItemsService.postNewTableItem(newTableItem);
+        return tableItemsService.addNewTableItem(newTableItem);
     }
 }
