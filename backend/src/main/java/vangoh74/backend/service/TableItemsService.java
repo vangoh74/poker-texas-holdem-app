@@ -2,6 +2,7 @@ package vangoh74.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vangoh74.backend.dto.TableItemDto;
 import vangoh74.backend.model.Card;
 import vangoh74.backend.model.TableItem;
 import vangoh74.backend.repository.TableItemsRepository;
@@ -14,30 +15,29 @@ import java.util.Optional;
 public class TableItemsService {
 
     private final TableItemsRepository tableItemsRepository;
-    private final IdService idService;
 
     @Autowired
-    public TableItemsService(TableItemsRepository tableItemsRepository, IdService idService) {
+    public TableItemsService(TableItemsRepository tableItemsRepository) {
         this.tableItemsRepository = tableItemsRepository;
-        this.idService = idService;
     }
 
     public List<TableItem> getTableItems() {
-        return tableItemsRepository.getTableItems();
+        return tableItemsRepository.findAll();
     }
 
-    public TableItem addNewTableItem(TableItem newTableItem) {
-        String randomId = idService.generateId();
-        newTableItem.setId(randomId);
+    public TableItem addNewTableItem(TableItemDto tableItemDto) {
 
+        TableItem newTableItem = new TableItem();
         DeckService deckService = new DeckService();
-        List<Optional<Card>> fiveCards = new ArrayList<>();
+        List<Optional<Card>> tableCards = new ArrayList<>();
 
+        // Flop, Turn and River
         for (int i = 0; i < 5; i++) {
-            fiveCards.add(deckService.deal());
+            tableCards.add(deckService.deal());
         }
         
-        newTableItem.setTableCards(fiveCards);
-        return tableItemsRepository.postNewTableItem(newTableItem);
+        tableItemDto.setTableCards(tableCards);
+        newTableItem.setTableCards(tableItemDto.getTableCards());
+        return tableItemsRepository.insert(newTableItem);
     }
 }
