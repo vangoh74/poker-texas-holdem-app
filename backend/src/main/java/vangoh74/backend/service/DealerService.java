@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class DealerService {
 
-    private static final Deck deck = new Deck();
+    private final Deck deck = new Deck();
 
-    public static void initShuffledDeck() {
+    public void initShuffledDeck() {
         List<Card> newDeckCards = new ArrayList<>();
         for(Suit suit : Suit.values()) {
             for(Rank rank : Rank.values()) {
@@ -23,17 +23,17 @@ public class DealerService {
             }
         }
         Collections.shuffle(newDeckCards);
-        deck.setPokerDeck(newDeckCards);
+        this.deck.setPokerDeck(newDeckCards);
     }
 
     public Card deal() {
         int topCardIndex = 0;
 
-        if (deck.getPokerDeck().isEmpty()) {
+        if (this.deck.getPokerDeck().isEmpty()) {
             throw new RuntimeException("Deckcards is Empty!!");
         }
 
-        return deck.getPokerDeck().remove(topCardIndex);
+        return this.deck.getPokerDeck().remove(topCardIndex);
     }
 
 }
