@@ -21,5 +21,5 @@ public class TableItem {
     @Id
     private String id;
     private int roundNbr;
-    private List<Optional<Card>> tableCards;
+    private List<Card> tableCards;
 }

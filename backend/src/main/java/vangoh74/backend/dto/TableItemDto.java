@@ -15,6 +15,6 @@ import java.util.Optional;
 @Builder
 public class TableItemDto {
     private int roundNbr;
-    private List<Optional<Card>> tableCards;
+    private List<Card> tableCards;
 
 }
