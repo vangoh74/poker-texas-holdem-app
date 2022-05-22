@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class DealerService {
 
-    private final Deck deck = new Deck();
+    private static final Deck deck = new Deck();
 
-    public void initShuffledDeck() {
+    public static void initShuffledDeck() {
         List<Card> newDeckCards = new ArrayList<>();
         for(Suit suit : Suit.values()) {
             for(Rank rank : Rank.values()) {
