@@ -39,9 +39,11 @@ public class TableItemsService {
         for (int i = 0; i < 5; i++) {
             tableCards.add(dealerService.deal());
         }
-        
         tableItemDto.setTableCards(tableCards);
+
+        newTableItem.setRoundNbr(tableItemDto.getRoundNbr());
         newTableItem.setTableCards(tableItemDto.getTableCards());
+
         return tableItemsRepository.insert(newTableItem);
     }
 }
