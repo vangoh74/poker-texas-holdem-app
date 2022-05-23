@@ -8,7 +8,9 @@ type TableItemsOverviewProps = {
 export default function TableItemsOverview( {tableItems} : TableItemsOverviewProps) {
     return (
         <>
-            {tableItems.map(item => <TableItemsView key={item.id} tableItem={item} />)}
+            {tableItems.map(item =>
+                <TableItemsView key={item.id} tableItem={item} />
+            )}
         </>
     )
 }

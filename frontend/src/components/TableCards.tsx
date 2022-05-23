@@ -3,10 +3,10 @@ type Card = {
     suit : string
 }
 
-
 type TableCardsProps = {
     card : Card
 }
+
 export default function TableCards({card} : TableCardsProps) {
     return (
         <>
