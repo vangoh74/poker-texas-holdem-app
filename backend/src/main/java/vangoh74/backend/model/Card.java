@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class Card {
     private Rank rank;
     private Suit suit;
-
 }
