@@ -16,5 +16,4 @@ import java.util.Optional;
 public class TableItemDto {
     private int roundNbr;
     private List<Card> tableCards;
-
 }
