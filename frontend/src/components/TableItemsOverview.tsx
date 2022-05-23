@@ -1,4 +1,5 @@
 import {TableItem} from "../model/TableItem";
+import TableItemsView from "./TableItemsView";
 
 type TableItemsOverviewProps = {
     tableItems: TableItem[]
@@ -7,19 +8,7 @@ type TableItemsOverviewProps = {
 export default function TableItemsOverview( {tableItems} : TableItemsOverviewProps) {
     return (
         <>
+            {tableItems.map(item => <TableItemsView key={item.id} tableItem={item} />)}
         </>
     )
-
-/*
-    return (
-        <div>
-            {tableItems.map(item =>
-                {item.tableCards.map( ({rank, suit}) => (
-                    <p key={rank}> {rank}, {suit}</p>
-                    )
-
-                )}
-            )}
-        </div>
-    )*/
 }
