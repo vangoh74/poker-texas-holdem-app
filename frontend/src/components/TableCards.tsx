@@ -10,7 +10,7 @@ type TableCardsProps = {
 export default function TableCards({card} : TableCardsProps) {
     return (
         <>
-            <div>{card.suit} {card.suit}</div>
+            <div>{card.rank} {card.suit}</div>
         </>
     )
 }
