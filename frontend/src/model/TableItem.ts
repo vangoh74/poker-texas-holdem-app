@@ -1,4 +1,4 @@
-type cards = {
+type Card = {
     rank : string;
     suit : string;
 }
@@ -6,5 +6,5 @@ type cards = {
 export type TableItem = {
     id : string;
     roundNbr : number;
-    tableCards : cards
+    tableCards : Card[]
 }
