@@ -6,5 +6,4 @@ import vangoh74.backend.model.TableItem;
 
 @Repository
 public interface TableItemsRepository extends MongoRepository<TableItem, String> {
-
 }
