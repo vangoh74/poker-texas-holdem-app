@@ -5,7 +5,7 @@ const enum Suit {
     CLUBS = '♣',
     HEARTS = '♥',
     SPADES = '♠'
-};
+}
 
 const enum Rank {
 
