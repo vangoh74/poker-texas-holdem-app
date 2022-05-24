@@ -2,13 +2,13 @@ package vangoh74.backend.model;
 
 public enum Suit {
 
-    DIAMONDS(0),
-    CLUBS(1),
-    HEARTS(2),
-    SPADES(3);
+    DIAMONDS('♦'),
+    CLUBS('♣'),
+    HEARTS('♥'),
+    SPADES('♠');
 
-    private int suitValue;
-    Suit(int suitValue) {
+    private char suitValue;
+    Suit(char suitValue) {
         this.suitValue = suitValue;
     }
 
