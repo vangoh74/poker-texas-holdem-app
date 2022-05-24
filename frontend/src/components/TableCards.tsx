@@ -26,7 +26,7 @@ const enum Rank {
 
 type Card = {
     rank : string,
-    suit : String
+    suit : string
 }
 
 type TableCardsProps = {
