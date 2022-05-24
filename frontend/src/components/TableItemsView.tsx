@@ -11,7 +11,8 @@ export default function TableItemsView({tableItem} : TableItemsViewProps) {
         <>
             <h3>Table ID: {tableItem.id}</h3>
             <h3>Round {tableItem.roundNbr}</h3>
-            {tableItem.tableCards.map(card => <TableCards key={card.rank} card={card} />) }
+            <div className={"tableMidCards"}>{tableItem.tableCards.map(card => <TableCards key={card.rank} card={card} />) }</div>
+
         </>
     )
 }
