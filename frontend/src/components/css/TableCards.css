@@ -1,29 +1,10 @@
-*, *::after, *::before {
-    box-sizing: border-box;
-}
-
-.tableMidCards {
+.cardBody {
     margin: 0;
     display: grid;
     grid-template-columns: repeat(5, 4rem);
-    grid-template-rows: 7rem 2rem 7rem;
     gap: .5rem;
-    cursor: pointer;
     justify-content: center;
-    padding-top: 1rem;
-}
-
-.deck {
-    height: 100%;
-    width: 100%;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    border-radius: .5rem;
-    color: deeppink;
-    user-select: none;
+    background-color: green;
 }
 
 .text {
@@ -36,7 +17,6 @@
 .card {
     display: flex;
     justify-content: center;
-    position: relative;
     height: 100%;
     width: 100%;
     border: 1px solid black;
@@ -45,17 +25,7 @@
     font-size: 3rem;
     color: deeppink;
     user-select: none;
-}
-
-.card::before,
-.card::after {
-}
-.card::after {
-
-}
-
-.card::after {
-
+    background-color: white;
 }
 
 

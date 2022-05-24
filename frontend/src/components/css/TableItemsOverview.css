@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+    color: white;
+    font-style: oblique;
+}
+
+.gameRoom {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
