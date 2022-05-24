@@ -1,5 +1,6 @@
 import {TableItem} from "../model/TableItem";
 import TableCards from "./TableCards";
+import "./css/TableItemsView.css"
 
 type TableItemsViewProps = {
     tableItem : TableItem
@@ -8,10 +9,10 @@ type TableItemsViewProps = {
 export default function TableItemsView({tableItem} : TableItemsViewProps) {
 
     return (
-        <>
+        <div className={"table"}>
             <h3>Table ID: {tableItem.id}</h3>
             <h3>Round {tableItem.roundNbr}</h3>
-            {tableItem.tableCards.map(card => <TableCards key={card.rank} card={card} />) }
-        </>
+            <div className={"cardBody"}>{tableItem.tableCards.map(card => <TableCards key={card.rank} card={card} />) }</div>
+        </div>
     )
 }
