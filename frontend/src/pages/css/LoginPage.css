@@ -1,0 +1,54 @@
+.login-root {
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    padding: 20rem;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.loginBackground {
+    max-height: 300px;
+    min-width: 400px;
+    z-index: 0;
+    overflow: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgba(54, 53, 53, 0.99);
+}
+.padding-top-40 {
+    padding-top: 40px;
+}
+.padding-bottom-15 {
+    padding-bottom: 10px;
+}
+
+.padding-bottom-24 {
+    padding-bottom: 24px;
+}
+
+.field input {
+    font-size: 16px;
+    color: black;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 100%;
+    min-height: 44px;
+    border: unset;
+
+}
+
+input[type="submit"] {
+    background-color: rgba(84, 105, 212, 0.9);
+    box-shadow: rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(0, 0, 0, 0.12) 0 1px 1px 0,
+    rgb(84, 105, 212) 0 0 0 1px,
+    rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(60, 66, 87, 0.08) 0 2px 5px 0;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
