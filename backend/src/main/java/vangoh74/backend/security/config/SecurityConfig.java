@@ -7,18 +7,23 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import vangoh74.backend.security.filter.JWTAuthFilter;
 import vangoh74.backend.security.service.AppUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AppUserDetailsService appUserDetailsService;
+    private final JWTAuthFilter jwtAuthFilter;
 
     @Autowired
-    public SecurityConfig(AppUserDetailsService appUserDetailsService) {
+    public SecurityConfig(AppUserDetailsService appUserDetailsService, JWTAuthFilter jwtAuthFilter) {
         this.appUserDetailsService = appUserDetailsService;
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/**").authenticated()
-                .and().formLogin()
-                .and().httpBasic();
+                .and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }
