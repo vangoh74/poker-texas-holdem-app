@@ -22,7 +22,7 @@ class AppUserAuthControllerTest {
     private String JWT_SECRET;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AppUserRepository appUserRepository;
@@ -66,7 +66,7 @@ class AppUserAuthControllerTest {
         // GIVEN
         createDummyUserInDataBase();
 
-        // WHEN // THEN
+        // WHEN
         webTestClient.post()
                 .uri("/auth/login")
                 .bodyValue(AppUser.builder()
