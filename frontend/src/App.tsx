@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/Header";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TableItemsOverview from "./components/TableItemsOverview";
-import UseTableItems from "./hooks/UseTableItems";
+import UseTableItems from "./hooks/useTableItems";
 import LoginPage from "./pages/LoginPage";
 
 export default function App() {
