@@ -41,12 +41,9 @@ class DealerServiceTest {
 
         // WHEN
         Card actual = dealerService.deal();
-        int actualSize = deckCards.getPokerDeck().size();
 
         // THEN
         Card expected = card_1;
-        int expectedSize = 3;
         assertEquals(expected, actual);
-        assertEquals(expectedSize, actualSize);
     }
 }
