@@ -3,12 +3,16 @@ package vangoh74.backend.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import vangoh74.backend.model.*;
 import vangoh74.backend.repository.TableItemsRepository;
-import vangoh74.backend.service.DealerService;
+import vangoh74.backend.security.model.AppUser;
+import vangoh74.backend.security.repository.AppUserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +26,29 @@ class TableItemsControllerTest {
     private int port;
 
     @Autowired
-    private WebTestClient testClient;
+    private WebTestClient webTestClient;
 
     @Autowired
-    private TableItemsRepository tableItemsRepo;
+    private TableItemsRepository tableItemsRepository;
+
+    private String dummyJwt;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @BeforeEach
     public void cleanUp() {
-        tableItemsRepo.deleteAll();
+        tableItemsRepository.deleteAll();
+        appUserRepository.deleteAll();
+
+        dummyJwt = generateJwt();
     }
 
     @Test
-    void getTableItemsTest_ReturnAllGivenTableItems() {
+    void getTableItemsTest_ReturnAllTableItemsFromDB() {
 
         // GIVEN
         Card card_1 = new Card(Rank.ACE, Suit.CLUBS);
@@ -61,12 +76,13 @@ class TableItemsControllerTest {
                 .tableCards(round_2_cards)
                 .build();
 
-        tableItemsRepo.insert(item_1);
-        tableItemsRepo.insert(item_2);
+        tableItemsRepository.insert(item_1);
+        tableItemsRepository.insert(item_2);
 
         // WHEN
-        List<TableItem> actual = testClient.get()
+        List<TableItem> actual = webTestClient.get()
                 .uri("/api/tableitems")
+                .headers(http -> http.setBearerAuth(dummyJwt))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(TableItem.class)
@@ -97,8 +113,9 @@ class TableItemsControllerTest {
                 .build();
 
         // WHEN
-        TableItem actual = testClient.post()
+        TableItem actual = webTestClient.post()
                 .uri("/api/tableitems")
+                .headers(http -> http.setBearerAuth(dummyJwt))
                 .bodyValue(newItem)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -115,5 +132,28 @@ class TableItemsControllerTest {
                 .tableCards(actual.getTableCards())
                 .build();
         assertEquals(expected, actual);
+    }
+
+    private String generateJwt() {
+        String hashedPassword = passwordEncoder.encode("test_password");
+        AppUser dummyUser = AppUser.builder()
+                .username("test_username")
+                .password(hashedPassword)
+                .build();
+        appUserRepository.save(dummyUser);
+
+        String jwt = webTestClient.post()
+                .uri("/auth/login")
+                .bodyValue(AppUser.builder()
+                        .username("test_username")
+                        .password("test_password")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        return jwt;
     }
 }
