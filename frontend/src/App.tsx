@@ -3,11 +3,11 @@ import './App.css';
 import Header from "./components/Header";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TableItemsOverview from "./components/TableItemsOverview";
-import useTableItems from "./hooks/UseTableItems";
+import UseTableItems from "./hooks/UseTableItems";
 import LoginPage from "./pages/LoginPage";
 
 export default function App() {
-    const tableItems = useTableItems();
+    const tableItems = UseTableItems();
   return (
     <BrowserRouter>
         <Header />
