@@ -1,13 +1,9 @@
-import {TableItem} from "../model/TableItem";
 import TableItemsView from "./TableItemsView";
 import "./css/TableItemsOverview.css";
+import UseTableItems from "../hooks/useTableItems";
 
-type TableItemsOverviewProps = {
-    tableItems: TableItem[]
-}
-
-export default function TableItemsOverview( {tableItems} : TableItemsOverviewProps) {
-
+export default function TableItemsOverview() {
+    const tableItems = UseTableItems();
     return (
         <div className={"gameRoom"}>
             {tableItems.map(item =>
