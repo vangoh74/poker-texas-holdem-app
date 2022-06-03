@@ -41,7 +41,7 @@ public class TableItemsService {
         }
         tableItemDto.setTableCards(tableCards);
 
-        newTableItem.setRoundNbr(tableItemDto.getRoundNbr());
+        newTableItem.setRoundNumber(tableItemDto.getRoundNbr());
         newTableItem.setTableCards(tableItemDto.getTableCards());
 
         return tableItemsRepository.insert(newTableItem);

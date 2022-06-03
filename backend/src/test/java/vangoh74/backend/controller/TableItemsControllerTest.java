@@ -3,10 +3,8 @@ package vangoh74.backend.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import vangoh74.backend.model.*;
@@ -66,13 +64,13 @@ class TableItemsControllerTest {
 
         TableItem item_1 = TableItem.builder()
                 .id("1")
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build();
 
         TableItem item_2 = TableItem.builder()
                 .id("2")
-                .roundNbr(2)
+                .roundNumber(2)
                 .tableCards(round_2_cards)
                 .build();
 
@@ -93,12 +91,12 @@ class TableItemsControllerTest {
         List<TableItem> expected = List.of(
                 TableItem.builder()
                         .id("1")
-                        .roundNbr(1)
+                        .roundNumber(1)
                         .tableCards(round_1_cards)
                         .build(),
                 TableItem.builder()
                         .id("2")
-                        .roundNbr(2)
+                        .roundNumber(2)
                         .tableCards(round_2_cards)
                         .build());
 
@@ -109,7 +107,7 @@ class TableItemsControllerTest {
     void postNewTableItemTest_returnAddedNewItem() {
         // GIVEN
         TableItem newItem = TableItem.builder()
-                .roundNbr(1)
+                .roundNumber(1)
                 .build();
 
         // WHEN
@@ -128,7 +126,7 @@ class TableItemsControllerTest {
         assertNotNull(actual.getId());
         TableItem expected = TableItem.builder()
                 .id(actual.getId())
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(actual.getTableCards())
                 .build();
         assertEquals(expected, actual);
