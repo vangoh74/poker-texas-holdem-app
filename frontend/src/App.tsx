@@ -5,6 +5,7 @@ import {Route, Routes} from "react-router-dom";
 import TableItemsOverview from "./components/TableItemsOverview";
 import LoginPage from "./pages/LoginPage";
 import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 import RequireAuth from "./routing/RequireAuth";
 
 export default function App() {
