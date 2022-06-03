@@ -5,6 +5,6 @@ type Card = {
 
 export type TableItem = {
     id : string;
-    roundNbr : number;
+    roundNumber : number;
     tableCards : Card[]
 }
