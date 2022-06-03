@@ -1,24 +1,26 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/Header";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import TableItemsOverview from "./components/TableItemsOverview";
-import useTableItems from "./hooks/UseTableItems";
 import LoginPage from "./pages/LoginPage";
+import {ToastContainer} from "react-toastify";
+import RequireAuth from "./routing/RequireAuth";
 
 export default function App() {
-    const tableItems = useTableItems();
+
   return (
-    <BrowserRouter>
+    <>
+        <ToastContainer />
         <Header />
         <Routes>
-            <Route path="/"
-                element={<TableItemsOverview
-                    tableItems={tableItems}/>} />
+            <Route element={<RequireAuth />}>
+                <Route path="/"
+                       element={<TableItemsOverview />}
+                />
+            </Route>
             <Route path={"/login"} element={<LoginPage />} />
         </Routes>
-    </BrowserRouter>
+    </>
   );
 }
-
-
