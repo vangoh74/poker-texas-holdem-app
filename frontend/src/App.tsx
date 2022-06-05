@@ -7,6 +7,7 @@ import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import RequireAuth from "./routing/RequireAuth";
 import PokerRoomOverview from "./components/PokerRoomOverview";
+import TableItemsOverview from "./components/TableItemsOverview";
 
 export default function App() {
 
@@ -17,8 +18,9 @@ export default function App() {
         <Routes>
             <Route element={<RequireAuth />}>
                 <Route path="/"
-                       element={<PokerRoomOverview />}
-                />
+                       element={<PokerRoomOverview />} />
+                <Route path="/api/tableitems"
+                       element={<TableItemsOverview />} />
             </Route>
             <Route path={"/login"} element={<LoginPage />} />
         </Routes>
