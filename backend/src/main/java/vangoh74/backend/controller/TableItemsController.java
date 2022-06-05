@@ -27,4 +27,9 @@ public class TableItemsController {
     public TableItem postNewTableItem(@RequestBody TableItemDto tableItemDto) {
         return tableItemsService.addNewTableItem(tableItemDto);
     }
+
+    @GetMapping("{id}")
+    public TableItem getTableItemsByTableId(@PathVariable String id) {
+        return tableItemsService.getTableItemsByTableId(id);
+    }
 }

@@ -10,6 +10,7 @@ import vangoh74.backend.repository.TableItemsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TableItemsService {
@@ -47,5 +48,10 @@ public class TableItemsService {
         newTableItem.setTableCards(tableItemDto.getTableCards());
 
         return tableItemsRepository.insert(newTableItem);
+    }
+
+    public TableItem getTableItemsByTableId(String id) {
+        return tableItemsRepository.findById(id)
+                .orElseThrow( () -> new NoSuchElementException("TableItem with id: " + id + " not find!"));
     }
 }
