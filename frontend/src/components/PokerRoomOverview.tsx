@@ -1,4 +1,4 @@
-import Table from "./Table";
+import TableMiniature from "./TableMiniature";
 import UseTableItems from "../hooks/useTableItems";
 import "./css/PokerRoomOverview.css"
 
@@ -11,7 +11,7 @@ export default function PokerRoomOverview() {
             <div className={"gallery"}>
                 {
                     tableItems.map(tableItem =>
-                        <Table key={tableItem.id} tableItem={tableItem} />)
+                        <TableMiniature key={tableItem.id} tableItem={tableItem} />)
                 }
             </div>
         </div>
