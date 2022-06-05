@@ -75,36 +75,49 @@ class TableItemsServiceTest {
     @Test
     void addNewTableItemTest_whenNewTableItemGiven_thenAddInToDBAndReturnNewItemAdded() {
         // GIVEN
-        Card card_1 = new Card(Rank.ACE, Suit.CLUBS);
-        Card card_2 = new Card(Rank.JACK, Suit.DIAMONDS);
+        List<Card> tableCards = new ArrayList<>();
 
-        List<Card> round_1_cards = new ArrayList<>();
-        round_1_cards.add(card_1);
-        round_1_cards.add(card_2);
+        tableCards.add(new Card(Rank.ACE, Suit.CLUBS));
+        tableCards.add(new Card(Rank.JACK, Suit.DIAMONDS));
+        tableCards.add(new Card(Rank.TWO, Suit.HEARTS));
+        tableCards.add(new Card(Rank.TEN, Suit.HEARTS));
+        tableCards.add(new Card(Rank.EIGHT, Suit.HEARTS));
 
         TableItem itemToAdd = TableItem.builder()
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
                 .roundNumber(1)
-                .tableCards(round_1_cards)
+                .tableCards(tableCards)
                 .build();
+
         when(tableItemsRepository.insert(itemToAdd)).thenReturn(TableItem.builder()
-                .id("Test")
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
                 .roundNumber(1)
-                .tableCards(round_1_cards)
+                .tableCards(tableCards)
                 .build());
 
         // WHEN
         TableItemDto newTableItem = TableItemDto.builder()
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
                 .roundNumber(1)
-                .tableCards(round_1_cards)
                 .build();
 
         TableItem actual = tableItemsService.addNewTableItem(newTableItem);
+        actual.setTableCards(tableCards);
 
         // THEN
         TableItem expected = TableItem.builder()
-                .id("Test")
+                .id("1234")
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
                 .roundNumber(1)
-                .tableCards(round_1_cards)
+                .tableCards(tableCards)
                 .build();
         assertEquals(expected, actual);
     }
