@@ -94,7 +94,7 @@ class TableItemsServiceTest {
 
         // WHEN
         TableItemDto newTableItem = TableItemDto.builder()
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build();
 
