@@ -1,0 +1,36 @@
+.table-miniature {
+    margin: 5px;
+    background-color: rgba(255, 255, 255, .2);
+    border-top: 20px solid rgba(255, 255, 255, .2);
+    border-right: 18px solid darkgrey;
+    border-bottom: 50px solid rgba(255, 255, 255, .2);
+    border-left: 18px solid darkgrey;
+}
+
+.table-title {
+    align-content: center;
+    margin: 10px;
+}
+
+.table-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 15px;
+    padding: 10px;
+    background-color: #966306;
+}
+
+.take-a-place-btn {
+    background-color: darkgray;
+    color: black;
+    margin: 20px;
+    padding: 8px;
+    border: 4px solid rgba(255, 255, 255, .2);
+    border-radius: 1.2rem;
+}
+
+.take-a-place-btn:hover {
+    background-color: green;
+    color: white;
+}
