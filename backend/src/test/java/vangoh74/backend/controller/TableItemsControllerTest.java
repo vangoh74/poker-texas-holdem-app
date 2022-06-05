@@ -1,5 +1,6 @@
 package vangoh74.backend.controller;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import vangoh74.backend.dto.TableItemDto;
 import vangoh74.backend.model.*;
 import vangoh74.backend.repository.TableItemsRepository;
 import vangoh74.backend.security.model.AppUser;
@@ -153,5 +155,78 @@ class TableItemsControllerTest {
                 .getResponseBody();
 
         return jwt;
+    }
+
+    @Test
+    void getTableItemsByTableId_whenTableIdIsValid() {
+        // GIVEN
+        TableItemDto tableItemDto = TableItemDto.builder()
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
+                .roundNumber(1)
+                .build();
+
+        TableItem addNewTableItem = webTestClient.post()
+                .uri("http://localhost:" + port + "/api/tableitems")
+                .headers(http -> http.setBearerAuth(dummyJwt))
+                .bodyValue(tableItemDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(TableItem.class)
+                .returnResult()
+                .getResponseBody();
+
+        // WHEN
+        assertNotNull(addNewTableItem);
+        TableItem actual = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/tableitems/" + addNewTableItem.getId())
+                .headers(http -> http.setBearerAuth(dummyJwt))
+                .exchange()
+                .expectBody(TableItem.class)
+                .returnResult()
+                .getResponseBody();
+
+        // THEN
+        assertNotNull(actual);
+        TableItem expected = TableItem.builder()
+                .id(actual.getId())
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
+                .roundNumber(1)
+                .tableCards(actual.getTableCards())
+                .build();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void getTableItemsByTableIdTest_whenTableIdIsNotValid_shouldThrowException() {
+        // GIVEN
+        TableItemDto tableItemDto = TableItemDto.builder()
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
+                .roundNumber(1)
+                .build();
+
+        webTestClient.post()
+                .uri("http://localhost:" + port + "/api/tableitems")
+                .headers(http -> http.setBearerAuth(dummyJwt))
+                .bodyValue(tableItemDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(TableItem.class)
+                .returnResult()
+                .getResponseBody();
+
+        // WHEN
+        webTestClient.get()
+                .uri("http://localhost:" + port + "/api/tableitems" + "WRONG_ID")
+                .headers(http -> http.setBearerAuth(dummyJwt))
+                .exchange()
+        // THEN
+                .expectStatus().is4xxClientError();
+
     }
 }
