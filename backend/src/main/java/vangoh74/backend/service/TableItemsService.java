@@ -16,7 +16,6 @@ public class TableItemsService {
 
     private final TableItemsRepository tableItemsRepository;
 
-
     @Autowired
     public TableItemsService(TableItemsRepository tableItemsRepository) {
         this.tableItemsRepository = tableItemsRepository;
@@ -41,7 +40,10 @@ public class TableItemsService {
         }
         tableItemDto.setTableCards(tableCards);
 
-        newTableItem.setRoundNbr(tableItemDto.getRoundNbr());
+        newTableItem.setBigBlind(tableItemDto.getBigBlind());
+        newTableItem.setTableSize(tableItemDto.getTableSize());
+        newTableItem.setFreeSeats(tableItemDto.getFreeSeats());
+        newTableItem.setRoundNumber(tableItemDto.getRoundNumber());
         newTableItem.setTableCards(tableItemDto.getTableCards());
 
         return tableItemsRepository.insert(newTableItem);

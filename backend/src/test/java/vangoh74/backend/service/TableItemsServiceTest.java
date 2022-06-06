@@ -38,13 +38,13 @@ class TableItemsServiceTest {
 
         TableItem item_1 = TableItem.builder()
                 .id("1")
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build();
 
         TableItem item_2 = TableItem.builder()
                 .id("2")
-                .roundNbr(2)
+                .roundNumber(2)
                 .tableCards(round_2_cards)
                 .build();
 
@@ -57,12 +57,12 @@ class TableItemsServiceTest {
         List<TableItem> expected = List.of(
                 TableItem.builder()
                     .id("1")
-                    .roundNbr(1)
+                    .roundNumber(1)
                     .tableCards(round_1_cards)
                     .build(),
                 TableItem.builder()
                     .id("2")
-                    .roundNbr(2)
+                    .roundNumber(2)
                     .tableCards(round_2_cards)
                     .build()
         );
@@ -83,18 +83,18 @@ class TableItemsServiceTest {
         round_1_cards.add(card_2);
 
         TableItem itemToAdd = TableItem.builder()
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build();
         when(tableItemsRepository.insert(itemToAdd)).thenReturn(TableItem.builder()
                 .id("Test")
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build());
 
         // WHEN
         TableItemDto newTableItem = TableItemDto.builder()
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build();
 
@@ -103,7 +103,7 @@ class TableItemsServiceTest {
         // THEN
         TableItem expected = TableItem.builder()
                 .id("Test")
-                .roundNbr(1)
+                .roundNumber(1)
                 .tableCards(round_1_cards)
                 .build();
         assertEquals(expected, actual);

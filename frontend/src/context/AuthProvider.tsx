@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 export const AuthContext = createContext<{token: string | undefined, login: (credentials: {username: string, password: string}) => void}>({
     token: undefined,
     login: () => {
-        toast.error("Login not initialised!")
+        toast.error("Login not initialized!")
     }
 });
 
@@ -23,7 +23,7 @@ export default function AuthProvider({children} : AuthProviderProps) {
             .then(response => response.data)
             .then((token) => setToken(token))
             .then(() => navigate("/"))
-            .catch(() => toast.error("Credentials invalid!"));
+            .catch(() => toast.error("Login failed. Credentials invalid!"));
     }
 
     return (

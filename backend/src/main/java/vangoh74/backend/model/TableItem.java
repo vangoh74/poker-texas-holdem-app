@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Builder
@@ -20,6 +19,10 @@ public class TableItem {
 
     @Id
     private String id;
-    private int roundNbr;
+    private double bigBlind;
+    private int tableSize;
+    private int freeSeats;
+    private int roundNumber;
     private List<Card> tableCards;
+
 }
