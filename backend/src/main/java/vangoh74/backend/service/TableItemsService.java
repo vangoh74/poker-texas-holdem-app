@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vangoh74.backend.dto.TableItemDto;
 import vangoh74.backend.model.Card;
-import vangoh74.backend.model.Deck;
 import vangoh74.backend.model.TableItem;
 import vangoh74.backend.repository.TableItemsRepository;
 
@@ -30,7 +29,6 @@ public class TableItemsService {
 
         TableItem newTableItem = new TableItem();
         DealerService dealerService = new DealerService();
-        Deck deck = new Deck();
         List<Card> tableCards = new ArrayList<>();
 
         dealerService.initShuffledDeck();
