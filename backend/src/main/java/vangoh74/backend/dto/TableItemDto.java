@@ -14,9 +14,11 @@ import java.util.Optional;
 @AllArgsConstructor
 @Builder
 public class TableItemDto {
+
     private double bigBlind;
     private int tableSize;
     private int freeSeats;
     private int roundNumber;
     private List<Card> tableCards;
+
 }

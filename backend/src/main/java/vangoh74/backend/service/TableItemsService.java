@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vangoh74.backend.dto.TableItemDto;
 import vangoh74.backend.model.Card;
-import vangoh74.backend.model.Deck;
 import vangoh74.backend.model.TableItem;
 import vangoh74.backend.repository.TableItemsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TableItemsService {
@@ -29,7 +29,6 @@ public class TableItemsService {
 
         TableItem newTableItem = new TableItem();
         DealerService dealerService = new DealerService();
-        Deck deck = new Deck();
         List<Card> tableCards = new ArrayList<>();
 
         dealerService.initShuffledDeck();
@@ -47,5 +46,10 @@ public class TableItemsService {
         newTableItem.setTableCards(tableItemDto.getTableCards());
 
         return tableItemsRepository.insert(newTableItem);
+    }
+
+    public TableItem getTableItemsByTableId(String id) {
+        return tableItemsRepository.findById(id)
+                .orElseThrow( () -> new NoSuchElementException("TableItem with id: " + id + " not found!"));
     }
 }
