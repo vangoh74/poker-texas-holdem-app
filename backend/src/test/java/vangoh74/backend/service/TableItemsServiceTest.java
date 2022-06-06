@@ -127,12 +127,10 @@ class TableItemsServiceTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     void getTableItemsByTableId_whenIdIsValid() {
 
         // GIVEN
-
         List<Card> tableCards = new ArrayList<>();
 
         tableCards.add(new Card(Rank.ACE, Suit.CLUBS));

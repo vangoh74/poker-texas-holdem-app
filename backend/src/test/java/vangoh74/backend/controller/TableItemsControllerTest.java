@@ -107,6 +107,7 @@ class TableItemsControllerTest {
 
     @Test
     void postNewTableItemTest_returnAddedNewItem() {
+
         // GIVEN
         TableItem newItem = TableItem.builder()
                 .roundNumber(1)
@@ -134,31 +135,9 @@ class TableItemsControllerTest {
         assertEquals(expected, actual);
     }
 
-    private String generateJwt() {
-        String hashedPassword = passwordEncoder.encode("test_password");
-        AppUser dummyUser = AppUser.builder()
-                .username("test_username")
-                .password(hashedPassword)
-                .build();
-        appUserRepository.save(dummyUser);
-
-        String jwt = webTestClient.post()
-                .uri("/auth/login")
-                .bodyValue(AppUser.builder()
-                        .username("test_username")
-                        .password("test_password")
-                        .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class)
-                .returnResult()
-                .getResponseBody();
-
-        return jwt;
-    }
-
     @Test
     void getTableItemsByTableId_whenTableIdIsValid() {
+
         // GIVEN
         TableItemDto tableItemDto = TableItemDto.builder()
                 .bigBlind(10.0)
@@ -202,6 +181,7 @@ class TableItemsControllerTest {
 
     @Test
     void getTableItemsByTableIdTest_whenTableIdIsNotValid_shouldThrowException() {
+
         // GIVEN
         TableItemDto tableItemDto = TableItemDto.builder()
                 .bigBlind(10.0)
@@ -229,4 +209,29 @@ class TableItemsControllerTest {
                 .expectStatus().is4xxClientError();
 
     }
+
+    private String generateJwt() {
+
+        String hashedPassword = passwordEncoder.encode("test_password");
+        AppUser dummyUser = AppUser.builder()
+                .username("test_username")
+                .password(hashedPassword)
+                .build();
+        appUserRepository.save(dummyUser);
+
+        String jwt = webTestClient.post()
+                .uri("/auth/login")
+                .bodyValue(AppUser.builder()
+                        .username("test_username")
+                        .password("test_password")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        return jwt;
+    }
+
 }
