@@ -11,8 +11,11 @@ import vangoh74.backend.repository.TableItemsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class TableItemsServiceTest {
@@ -22,6 +25,7 @@ class TableItemsServiceTest {
 
     @Test
     void getTableItemsTest_whenTableItemsAreAvailable_thenReturnsAllTableItems() {
+
         // GIVEN
         Card card_1 = new Card(Rank.ACE, Suit.CLUBS);
         Card card_2 = new Card(Rank.JACK, Suit.DIAMONDS);
@@ -74,6 +78,7 @@ class TableItemsServiceTest {
     @Disabled
     @Test
     void addNewTableItemTest_whenNewTableItemGiven_thenAddInToDBAndReturnNewItemAdded() {
+
         // GIVEN
         List<Card> tableCards = new ArrayList<>();
 
@@ -121,4 +126,61 @@ class TableItemsServiceTest {
                 .build();
         assertEquals(expected, actual);
     }
+
+
+    @Test
+    void getTableItemsByTableId_whenIdIsValid() {
+
+        // GIVEN
+
+        List<Card> tableCards = new ArrayList<>();
+
+        tableCards.add(new Card(Rank.ACE, Suit.CLUBS));
+        tableCards.add(new Card(Rank.JACK, Suit.DIAMONDS));
+        tableCards.add(new Card(Rank.TWO, Suit.HEARTS));
+        tableCards.add(new Card(Rank.TEN, Suit.HEARTS));
+        tableCards.add(new Card(Rank.EIGHT, Suit.HEARTS));
+
+        when(tableItemsRepository.findById("123")).thenReturn(
+                Optional.of(TableItem.builder()
+                        .id("123")
+                        .bigBlind(10.0)
+                        .tableSize(2)
+                        .freeSeats(2)
+                        .roundNumber(1)
+                        .tableCards(tableCards)
+                        .build()
+                )
+        );
+
+        // WHEN
+        TableItem actual = tableItemsService.getTableItemsByTableId("123");
+
+        // THEN
+        TableItem expected = TableItem.builder()
+                .id("123")
+                .bigBlind(10.0)
+                .tableSize(2)
+                .freeSeats(2)
+                .roundNumber(1)
+                .tableCards(tableCards)
+                .build();
+
+        verify(tableItemsRepository).findById("123");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getTableItemsByTableIdTest_ifTableIdIsNotValid_shouldThrowException() {
+
+        // GIVEN
+        when(tableItemsRepository.findById("123")).thenReturn(Optional.empty());
+
+        //WHEN //THEN
+        assertThrows(NoSuchElementException.class,
+                () -> tableItemsService.getTableItemsByTableId("123"));
+
+        verify(tableItemsRepository).findById("123");
+    }
+
 }
