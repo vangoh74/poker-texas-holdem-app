@@ -1,6 +1,6 @@
 import TableMiniature from "./TableMiniature";
 import UseTableItems from "../hooks/useTableItems";
-import "./css/PokerRoomOverview.css"
+import "./css/PokerRoomOverview.css";
 
 export default function PokerRoomOverview() {
 
