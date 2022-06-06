@@ -50,6 +50,6 @@ public class TableItemsService {
 
     public TableItem getTableItemsByTableId(String id) {
         return tableItemsRepository.findById(id)
-                .orElseThrow( () -> new NoSuchElementException("TableItem with id: " + id + " not find!"));
+                .orElseThrow( () -> new NoSuchElementException("TableItem with id: " + id + " not found!"));
     }
 }
