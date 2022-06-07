@@ -139,27 +139,20 @@ class TableItemsControllerTest {
     void getTableItemsByTableId_whenTableIdIsValid() {
 
         // GIVEN
-        TableItemDto tableItemDto = TableItemDto.builder()
+        TableItem tableItem = TableItem.builder()
+                .id("123")
                 .bigBlind(10.0)
                 .tableSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .build();
 
-        TableItem addNewTableItem = webTestClient.post()
-                .uri("http://localhost:" + port + "/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
-                .bodyValue(tableItemDto)
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectBody(TableItem.class)
-                .returnResult()
-                .getResponseBody();
+        TableItem addedTableItem = tableItemsRepository.insert(tableItem);
 
         // WHEN
-        assertNotNull(addNewTableItem);
+        assertNotNull(addedTableItem);
         TableItem actual = webTestClient.get()
-                .uri("http://localhost:" + port + "/api/tableitems/" + addNewTableItem.getId())
+                .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId())
                 .headers(http -> http.setBearerAuth(dummyJwt))
                 .exchange()
                 .expectBody(TableItem.class)
@@ -197,8 +190,7 @@ class TableItemsControllerTest {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(TableItem.class)
-                .returnResult()
-                .getResponseBody();
+                .returnResult();
 
         // WHEN
         webTestClient.get()
@@ -219,7 +211,7 @@ class TableItemsControllerTest {
                 .build();
         appUserRepository.save(dummyUser);
 
-        String jwt = webTestClient.post()
+        return webTestClient.post()
                 .uri("/auth/login")
                 .bodyValue(AppUser.builder()
                         .username("test_username")
@@ -230,8 +222,6 @@ class TableItemsControllerTest {
                 .expectBody(String.class)
                 .returnResult()
                 .getResponseBody();
-
-        return jwt;
     }
 
 }
