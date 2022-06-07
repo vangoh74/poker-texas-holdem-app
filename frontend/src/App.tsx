@@ -19,7 +19,7 @@ export default function App() {
             <Route element={<RequireAuth />}>
                 <Route path="/"
                        element={<PokerRoomOverview />} />
-                <Route path="/tableItem/:id"
+                <Route path="/api/tableitems/:id"
                        element={<DetailsPage />} />
             </Route>
             <Route path={"/login"} element={<LoginPage />} />

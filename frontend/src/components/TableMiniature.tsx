@@ -18,7 +18,7 @@ export default function TableMiniature({tableItem} : TableProps) {
                 <p>free seats: {tableItem.freeSeats}</p>
                 <div>
                     <button className={"take-a-seat-btn"}
-                            onClick={() => navigate("/tableItems/:id")}>take a seat</button>
+                            onClick={() => navigate("/api/tableitems/:id")}>take a seat</button>
                 </div>
 
             </div>
