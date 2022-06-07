@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css"
 import RequireAuth from "./routing/RequireAuth";
 import PokerRoomOverview from "./components/PokerRoomOverview";
 import DetailsPage from "./pages/DetailsPage";
-import TableItemsView from "./components/TableItemsView";
 
 export default function App() {
 
