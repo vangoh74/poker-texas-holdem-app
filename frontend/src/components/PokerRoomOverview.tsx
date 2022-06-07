@@ -1,10 +1,10 @@
 import TableMiniature from "./TableMiniature";
-import UseTableItems from "../hooks/useTableItems";
+import useTableItems from "../hooks/useTableItems";
 import "./css/PokerRoomOverview.css";
 
 export default function PokerRoomOverview() {
 
-    const tableItems = UseTableItems();
+    const tableItems = useTableItems();
 
     return (
         <div className={"room-background"}>
