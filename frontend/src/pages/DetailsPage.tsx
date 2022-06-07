@@ -21,7 +21,7 @@ export default function DetailsPage() {
                 <div>
                     <TableItemsView tableItem={detailedTableItems} />
                 </div>}
-            <button onClick={() => navigate(`/`)}>Back to Poker room</button>
+            <button className={"return-btn"} onClick={() => navigate(`/`)}>Back to Poker Room</button>
         </div>
     )
 }

@@ -5,3 +5,19 @@
     justify-content: space-evenly;
     min-height: 100vh;
 }
+
+.return-btn{
+    border-radius: 5px;
+    color: bisque;
+    background-color: #282c34;
+    border: solid bisque;
+    margin: 0px 7.5px 0px 5px;
+    padding: 3px;
+    font-size: 16px;
+    max-width: 100px;
+}
+
+.return-btn:hover {
+    cursor: pointer;
+    background-color: #55555e;
+}
