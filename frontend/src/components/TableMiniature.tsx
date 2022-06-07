@@ -1,7 +1,6 @@
 import {TableItem} from "../model/TableItem";
 import "./css/TableMiniature.css"
 import {useNavigate} from "react-router-dom";
-import UseTableItems from "../hooks/useTableItems";
 
 type TableProps = {
     tableItem : TableItem;
@@ -18,8 +17,8 @@ export default function TableMiniature({tableItem} : TableProps) {
                 <p>Table size: {tableItem.tableSize}</p>
                 <p>free seats: {tableItem.freeSeats}</p>
                 <div>
-                    <button className={"take-a-place-btn"}
-                            onClick={() => navigate("/api/tableItems")}>take a place</button>
+                    <button className={"take-a-seat-btn"}
+                            onClick={() => navigate("/tableItems/:id")}>take a seat</button>
                 </div>
 
             </div>

@@ -21,7 +21,7 @@
     background-color: #966306;
 }
 
-.take-a-place-btn {
+.take-a-seat-btn {
     background-color: darkgray;
     color: black;
     margin: 20px;
@@ -30,7 +30,7 @@
     border-radius: 1.2rem;
 }
 
-.take-a-place-btn:hover {
+.take-a-seat-btn:hover {
     background-color: green;
     color: white;
 }
