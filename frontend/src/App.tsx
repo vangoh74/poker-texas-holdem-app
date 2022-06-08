@@ -15,18 +15,17 @@ export default function App() {
     <>
         <ToastContainer />
         <Header />
-        <Routes>
 
+        <Routes>
             <Route element={<RequireAuth />}>
                 <Route path="/"
                        element={<PokerRoomOverview />} />
                 <Route path="/tableItems/:id"
                        element={<DetailsPage />} />
             </Route>
-
             <Route path={"/login"} element={<LoginPage />} />
-
         </Routes>
+
     </>
   )
 }
