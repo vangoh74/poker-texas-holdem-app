@@ -11,3 +11,11 @@ export function getTableItemsBy(id: string, token: string) {
     return axios.get(`/api/tableitems/${id}`, {headers: {"Authorization": token}})
     .then(response => response.data)
 }
+
+export const getUsername: (token?: string) =>
+    Promise<string> = (token) => {
+    return axios.get("/api/user/me", token
+        ? {headers: {"Authorization": token}}
+        : {})
+        .then(response => response.data)
+}

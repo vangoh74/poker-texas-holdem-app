@@ -5,7 +5,7 @@ import {AuthContext} from "../context/AuthProvider";
 import {toast} from "react-toastify";
 
 
-export default function UseTableItems() {
+export default function useTableItems() {
     const [tableItems, setTableItems] = useState<TableItem[]>([]);
     const {token} = useContext(AuthContext)
 

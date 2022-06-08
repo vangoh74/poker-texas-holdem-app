@@ -15,6 +15,7 @@ export default function App() {
     <>
         <ToastContainer />
         <Header />
+
         <Routes>
             <Route element={<RequireAuth />}>
                 <Route path="/"
@@ -24,6 +25,7 @@ export default function App() {
             </Route>
             <Route path={"/login"} element={<LoginPage />} />
         </Routes>
+
     </>
   )
 }
