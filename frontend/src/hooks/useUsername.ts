@@ -12,10 +12,9 @@ export default function useUsername() {
             getUsername(token)
                 .then(name => {
                     setUsername(name)
-                    return name
                 })
         }
-    }, [username, token])
+    }, [token])
 
     return {username, setUsername};
 }
