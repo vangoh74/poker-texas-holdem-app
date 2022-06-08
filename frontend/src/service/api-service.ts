@@ -7,7 +7,7 @@ export const getAllTableItems: (token: string) =>
             .then(response => response.data)
     };
 
-export function getTableItemsBy(id: string) {
-    return axios.get(`/api/tableitems/${id}`)
+export function getTableItemsBy(id: string, token: string) {
+    return axios.get(`/api/tableitems/${id}`, {headers: {"Authorization": token}})
     .then(response => response.data)
 }

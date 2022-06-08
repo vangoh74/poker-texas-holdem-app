@@ -3,7 +3,7 @@ import TableCards from "./TableCards";
 import "./css/TableItemsView.css"
 
 type TableItemsViewProps = {
-    tableItem : TableItem
+    tableItem : TableItem;
 }
 
 export default function TableItemsView({tableItem} : TableItemsViewProps) {
@@ -13,8 +13,9 @@ export default function TableItemsView({tableItem} : TableItemsViewProps) {
             <h3>Table ID: {tableItem.id}</h3>
             <h3>Round {tableItem.roundNumber}</h3>
             <div className={"cardBody"}>
-                {tableItem.tableCards.map(card => <TableCards key={card.rank} card={card} />) }
+                {tableItem.tableCards.map(card => <TableCards key={tableItem.id} card={card} />) }
             </div>
         </div>
     )
+
 }
