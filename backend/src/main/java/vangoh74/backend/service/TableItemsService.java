@@ -28,21 +28,17 @@ public class TableItemsService {
     public TableItem addNewTableItem(TableItemDto tableItemDto) {
 
         TableItem newTableItem = new TableItem();
+
         DealerService dealerService = new DealerService();
         List<Card> tableCards = new ArrayList<>();
-
         dealerService.initShuffledDeck();
 
         // Flop, Turn and River
         for (int i = 0; i < 5; i++) {
             tableCards.add(dealerService.deal());
         }
+        
         tableItemDto.setTableCards(tableCards);
-
-        newTableItem.setBigBlind(tableItemDto.getBigBlind());
-        newTableItem.setTableSize(tableItemDto.getTableSize());
-        newTableItem.setFreeSeats(tableItemDto.getFreeSeats());
-        newTableItem.setRoundNumber(tableItemDto.getRoundNumber());
         newTableItem.setTableCards(tableItemDto.getTableCards());
 
         return tableItemsRepository.insert(newTableItem);

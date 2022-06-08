@@ -141,8 +141,9 @@ class TableItemsControllerTest {
         // GIVEN
         TableItem tableItem = TableItem.builder()
                 .id("123")
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .roundState(RoundState.PRE_FLOP)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .build();
@@ -163,8 +164,9 @@ class TableItemsControllerTest {
         assertNotNull(actual);
         TableItem expected = TableItem.builder()
                 .id(actual.getId())
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .roundState(RoundState.PRE_FLOP)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .tableCards(actual.getTableCards())
@@ -177,8 +179,8 @@ class TableItemsControllerTest {
 
         // GIVEN
         TableItemDto tableItemDto = TableItemDto.builder()
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .build();
