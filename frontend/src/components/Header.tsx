@@ -17,10 +17,10 @@ export default function Header() {
     }
 
     return (
-        <header className={"headerDesign"}>
+        <header className={"header-box"}>
             <Title />
             <div>
-                <button className={"return-btn"} onClick={onClickLogout}>Logout</button>
+                <button className={"logout-button"} onClick={onClickLogout}>Logout</button>
             </div>
         </header>
     )
