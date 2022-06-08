@@ -5,9 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vangoh74.backend.model.Card;
+import vangoh74.backend.model.Player;
+import vangoh74.backend.model.RoundState;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -15,10 +17,15 @@ import java.util.Optional;
 @Builder
 public class TableItemDto {
 
-    private double bigBlind;
-    private int tableSize;
-    private int freeSeats;
     private int roundNumber;
+    private RoundState roundState;
+    private int bigBlind;
+    private int smallBlind;
+    private int maxSize;
+    private int freeSeats;
+    private double tableChips;
     private List<Card> tableCards;
+    private List<Player> players;
+    private Map<String, Integer> seats;
 
 }
