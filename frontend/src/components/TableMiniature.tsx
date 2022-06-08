@@ -14,7 +14,7 @@ export default function TableMiniature({tableItem} : TableProps) {
         <div className={"table-miniature"}>
             <div className={"table-title"}>Table: Big-Blind {tableItem.bigBlind}</div>
             <div className={"table-box"}>
-                <p>Table size: {tableItem.tableSize}</p>
+                <p>Table size: {tableItem.maxSize}</p>
                 <p>free seats: {tableItem.freeSeats}</p>
                 <div>
                     <button className={"take-a-seat-btn"}
