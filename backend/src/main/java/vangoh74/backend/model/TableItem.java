@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.Map;
 
 @Builder
 @Document(collection = "tableItems")
@@ -28,6 +27,6 @@ public class TableItem {
     private double tableChips;
     private List<Card> tableCards;
     private List<Player> players;
-    private Map<String, Integer> seats;
+    private List<Seat> seats;
 
 }

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import vangoh74.backend.model.Card;
 import vangoh74.backend.model.Player;
 import vangoh74.backend.model.RoundState;
+import vangoh74.backend.model.Seat;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +26,6 @@ public class TableItemDto {
     private double tableChips;
     private List<Card> tableCards;
     private List<Player> players;
-    private Map<String, Integer> seats;
+    private List<Seat> seats;
 
 }

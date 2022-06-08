@@ -3,10 +3,10 @@ package vangoh74.backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vangoh74.backend.dto.TableItemDto;
-import vangoh74.backend.model.Card;
-import vangoh74.backend.model.TableItem;
+import vangoh74.backend.model.*;
 import vangoh74.backend.repository.TableItemsRepository;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,9 +38,36 @@ public class TableItemsService {
             tableCards.add(dealerService.deal());
         }
 
-        tableItemDto.setTableCards(tableCards);
+        Player dummyPlayer = new Player();
+        Seat testSeat = new Seat();
+
+        List<Card> playerCards = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        List<Seat> seats = new ArrayList<>();
+
+        playerCards.add(dealerService.deal());
+        playerCards.add(dealerService.deal());
+
+        dummyPlayer.setPlayerName("test");
+        dummyPlayer.setPlayerChips(1000);
+        dummyPlayer.setPlayerImage("Avatar");
+        dummyPlayer.setPlayerCards(playerCards);
+        testSeat.setPlayerName(dummyPlayer.getPlayerName());
+        testSeat.setSeatNumber(1);
+
+        players.add(dummyPlayer);
+        seats.add(testSeat);
+
         newTableItem.setRoundNumber(tableItemDto.getRoundNumber());
-        newTableItem.setTableCards(tableItemDto.getTableCards());
+        newTableItem.setRoundState(RoundState.PRE_FLOP);
+        newTableItem.setBigBlind(tableItemDto.getBigBlind());
+        newTableItem.setSmallBlind(tableItemDto.getSmallBlind());
+        newTableItem.setMaxSize(tableItemDto.getMaxSize());
+        newTableItem.setFreeSeats(tableItemDto.getFreeSeats());
+        newTableItem.setTableChips(tableItemDto.getTableChips());
+        newTableItem.setTableCards(tableCards);
+        newTableItem.setPlayers(players);
+        newTableItem.setSeats(seats);
 
         return tableItemsRepository.insert(newTableItem);
     }
