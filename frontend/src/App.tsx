@@ -8,12 +8,9 @@ import "react-toastify/dist/ReactToastify.css"
 import RequireAuth from "./routing/RequireAuth";
 import PokerRoomOverview from "./components/PokerRoomOverview";
 import DetailsPage from "./pages/DetailsPage";
-import useUsername from "./hooks/useUsername";
-import LogoutPage from "./pages/LogoutPage";
 
 export default function App() {
 
-    const {setUsername} = useUsername();
   return (
     <>
         <ToastContainer />
@@ -25,7 +22,6 @@ export default function App() {
                        element={<PokerRoomOverview />} />
                 <Route path="/tableItems/:id"
                        element={<DetailsPage />} />
-                <Route path={"/logout"} element={<LogoutPage setUsername={setUsername}/>} />
             </Route>
 
             <Route path={"/login"} element={<LoginPage />} />

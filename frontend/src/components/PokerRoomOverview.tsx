@@ -14,6 +14,7 @@ export default function PokerRoomOverview() {
                         <TableMiniature key={tableItem.id} tableItem={tableItem} />)
                 }
             </div>
+
         </div>
 
     )

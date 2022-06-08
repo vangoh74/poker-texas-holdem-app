@@ -11,7 +11,7 @@ export const AuthContext = createContext<{
     logout: () => void }> ({
         token: undefined,
         login: () => {toast.error("Login not initialized!")},
-        logout: () => {toast.info("Welcome back to the poker room!!")} });
+        logout: () => {toast.info("Goodbye!")} });
 
 export type AuthProviderProps = {
     children : ReactElement;
