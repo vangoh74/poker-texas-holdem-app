@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.swing.*;
 import java.util.List;
 
 @Data
@@ -14,9 +13,9 @@ import java.util.List;
 @Builder
 public class Player {
 
-    private String name;
-    private double amount;
+    private String playerName;
+    private double playerChips;
     private List<Card> playerCards;
-    private ImageIcon playerAvatar;
+    private String playerImage;
 
 }
