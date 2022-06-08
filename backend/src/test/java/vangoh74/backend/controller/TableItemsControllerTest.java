@@ -130,7 +130,10 @@ class TableItemsControllerTest {
         TableItem expected = TableItem.builder()
                 .id(actual.getId())
                 .roundNumber(1)
+                .roundState(actual.getRoundState())
                 .tableCards(actual.getTableCards())
+                .players(actual.getPlayers())
+                .seats(actual.getSeats())
                 .build();
         assertEquals(expected, actual);
     }
