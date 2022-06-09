@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Card {
+@Builder
+public class Seat {
 
-    private Rank rank;
-    private Suit suit;
-
+    private int seatNumber;
+    private String playerName;
 }

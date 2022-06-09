@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-
 @Builder
 @Document(collection = "tableItems")
 @NoArgsConstructor
@@ -19,10 +18,15 @@ public class TableItem {
 
     @Id
     private String id;
-    private double bigBlind;
-    private int tableSize;
-    private int freeSeats;
     private int roundNumber;
+    private RoundState roundState;
+    private int bigBlind;
+    private int smallBlind;
+    private int maxSize;
+    private int freeSeats;
+    private double tableChips;
     private List<Card> tableCards;
+    private List<Player> players;
+    private List<Seat> seats;
 
 }

@@ -3,8 +3,7 @@ package vangoh74.backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vangoh74.backend.dto.TableItemDto;
-import vangoh74.backend.model.Card;
-import vangoh74.backend.model.TableItem;
+import vangoh74.backend.model.*;
 import vangoh74.backend.repository.TableItemsRepository;
 
 import java.util.ArrayList;
@@ -28,22 +27,28 @@ public class TableItemsService {
     public TableItem addNewTableItem(TableItemDto tableItemDto) {
 
         TableItem newTableItem = new TableItem();
+
         DealerService dealerService = new DealerService();
         List<Card> tableCards = new ArrayList<>();
-
         dealerService.initShuffledDeck();
 
         // Flop, Turn and River
         for (int i = 0; i < 5; i++) {
             tableCards.add(dealerService.deal());
         }
+
         tableItemDto.setTableCards(tableCards);
 
-        newTableItem.setBigBlind(tableItemDto.getBigBlind());
-        newTableItem.setTableSize(tableItemDto.getTableSize());
-        newTableItem.setFreeSeats(tableItemDto.getFreeSeats());
         newTableItem.setRoundNumber(tableItemDto.getRoundNumber());
+        newTableItem.setRoundState(tableItemDto.getRoundState());
+        newTableItem.setBigBlind(tableItemDto.getBigBlind());
+        newTableItem.setSmallBlind(tableItemDto.getSmallBlind());
+        newTableItem.setMaxSize(tableItemDto.getMaxSize());
+        newTableItem.setFreeSeats(tableItemDto.getFreeSeats());
+        newTableItem.setTableChips(tableItemDto.getTableChips());
         newTableItem.setTableCards(tableItemDto.getTableCards());
+        newTableItem.setPlayers(tableItemDto.getPlayers());
+        newTableItem.setSeats(tableItemDto.getSeats());
 
         return tableItemsRepository.insert(newTableItem);
     }

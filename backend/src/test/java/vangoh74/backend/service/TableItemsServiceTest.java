@@ -89,16 +89,16 @@ class TableItemsServiceTest {
         tableCards.add(new Card(Rank.EIGHT, Suit.HEARTS));
 
         TableItem itemToAdd = TableItem.builder()
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .tableCards(tableCards)
                 .build();
 
         when(tableItemsRepository.insert(itemToAdd)).thenReturn(TableItem.builder()
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .tableCards(tableCards)
@@ -106,8 +106,8 @@ class TableItemsServiceTest {
 
         // WHEN
         TableItemDto newTableItem = TableItemDto.builder()
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .build();
@@ -118,8 +118,8 @@ class TableItemsServiceTest {
         // THEN
         TableItem expected = TableItem.builder()
                 .id("1234")
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .tableCards(tableCards)
@@ -142,8 +142,8 @@ class TableItemsServiceTest {
         when(tableItemsRepository.findById("123")).thenReturn(
                 Optional.of(TableItem.builder()
                         .id("123")
-                        .bigBlind(10.0)
-                        .tableSize(2)
+                        .bigBlind(10)
+                        .maxSize(2)
                         .freeSeats(2)
                         .roundNumber(1)
                         .tableCards(tableCards)
@@ -157,8 +157,8 @@ class TableItemsServiceTest {
         // THEN
         TableItem expected = TableItem.builder()
                 .id("123")
-                .bigBlind(10.0)
-                .tableSize(2)
+                .bigBlind(10)
+                .maxSize(2)
                 .freeSeats(2)
                 .roundNumber(1)
                 .tableCards(tableCards)
