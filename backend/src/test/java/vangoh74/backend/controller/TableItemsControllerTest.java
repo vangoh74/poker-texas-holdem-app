@@ -31,7 +31,7 @@ class TableItemsControllerTest {
     @Autowired
     private TableItemsRepository tableItemsRepository;
 
-    private String dummyJwt;
+    private String dummy_JWT;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,7 +44,7 @@ class TableItemsControllerTest {
         tableItemsRepository.deleteAll();
         appUserRepository.deleteAll();
 
-        dummyJwt = generateJwt();
+        dummy_JWT = generateJwt();
     }
 
     @Test
@@ -82,7 +82,7 @@ class TableItemsControllerTest {
         // WHEN
         List<TableItem> actual = webTestClient.get()
                 .uri("/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(TableItem.class)
@@ -116,7 +116,7 @@ class TableItemsControllerTest {
         // WHEN
         TableItem actual = webTestClient.post()
                 .uri("/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .bodyValue(newItem)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -157,7 +157,7 @@ class TableItemsControllerTest {
         assertNotNull(addedTableItem);
         TableItem actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId())
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
                 .expectBody(TableItem.class)
                 .returnResult()
@@ -190,7 +190,7 @@ class TableItemsControllerTest {
 
         webTestClient.post()
                 .uri("http://localhost:" + port + "/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .bodyValue(tableItemDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -200,7 +200,7 @@ class TableItemsControllerTest {
         // WHEN
         webTestClient.get()
                 .uri("http://localhost:" + port + "/api/tableitems" + "WRONG_ID")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
         // THEN
                 .expectStatus().is4xxClientError();
