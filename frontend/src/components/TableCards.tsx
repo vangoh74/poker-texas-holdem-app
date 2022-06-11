@@ -92,6 +92,11 @@ export default function TableCards({card} : TableCardsProps) {
     }
     console.log(card.rank, Rank.TWO)
     return (
-        <div className={"card"}>{card.rank } {card.suit}</div>
+        <div className={"card"}>
+            <div className={"item-left-top"}>{card.rank } {card.suit}</div>
+            <div className={"item-center"}>{card.suit}</div>
+            <div className={"item-right-bottom"}>{card.rank } {card.suit}</div>
+        </div>
+
     )
 }

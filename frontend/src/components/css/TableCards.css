@@ -2,21 +2,38 @@
     margin: 0;
     display: grid;
     grid-template-columns: repeat(5, 4rem);
-    gap: .5rem;
+    gap: .4rem;
     justify-content: center;
     background-color: green;
 }
 
 .card {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     border: 1px solid black;
     border-radius: .5rem;
     align-items: center;
-    font-size: 3rem;
-    color: deeppink;
+
     user-select: none;
     background-color: white;
+}
+
+.item-left-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    font-size: 1rem;
+    color: deeppink;
+}
+
+.item-center {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    color: deeppink;
+    background-color: pink;
+    justify-content: center ;
 }
