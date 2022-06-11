@@ -1,3 +1,4 @@
+
 header {
     min-height: 5rem;
     padding: 20px;
@@ -19,6 +20,7 @@ header {
     min-height: 44px;
     border: unset;
 }
+
 .logout-button {
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: rgba(0, 0, 0, 0) 0 0 0 0,
@@ -43,5 +45,3 @@ header {
     background-color: rgba(54, 53, 53, 0.99);
     font-weight: 600;
 }
-
-/*background-color: rgba(84, 105, 212, 0.3);*/
