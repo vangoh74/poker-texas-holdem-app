@@ -21,7 +21,7 @@ export default function Header() {
             <Title />
             <div>
                 <button className={"logout-button"} onClick={onClickLogout}>Logout</button>
-                <button className={"logout-button"} onClick={() => navigate(`/`)}>Back to Poker Room</button>
+                <button className={"logout-button"} onClick={() => navigate(`/`)}>Poker Room</button>
             </div>
         </header>
     )
