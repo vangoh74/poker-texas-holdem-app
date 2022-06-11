@@ -1,5 +1,6 @@
 .cardBody {
-    margin: 0;
+    position: absolute;
+    width: 50%;
     display: grid;
     grid-template-columns: repeat(5, 4rem);
     gap: .4rem;
