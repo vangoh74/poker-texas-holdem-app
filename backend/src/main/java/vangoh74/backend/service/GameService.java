@@ -1,6 +1,7 @@
 package vangoh74.backend.service;
 
 import org.springframework.stereotype.Service;
+import vangoh74.backend.apiExceptions.PlayerAlreadyAtTableException;
 import vangoh74.backend.model.Player;
 import vangoh74.backend.model.TableItem;
 import vangoh74.backend.repository.TableItemsRepository;
@@ -19,7 +20,7 @@ public class GameService {
         this.tableItemsRepo = tableItemsRepo;
     }
 
-    public void addPlayerToTableItem(Player newPlayer, String tableId){
+    public void addPlayerToTableItem(Player newPlayer, String tableId) throws PlayerAlreadyAtTableException {
 
         TableItem tableItemToBeUpdated = getTableItemToBeUpdated(tableId);
         List<Player> players =  tableItemToBeUpdated.getPlayers();
@@ -30,18 +31,17 @@ public class GameService {
 
         Predicate<Player> predicate = player -> player.getPlayerName().equals(newPlayer.getPlayerName());
 
-        if(!players.stream().anyMatch(predicate)) {
+        if((players.stream().noneMatch(predicate)) && (players.size() < tableItemToBeUpdated.getMaxSize())) {
             players.add(newPlayer);
             tableItemsRepo.save(tableItemToBeUpdated);
         } else {
-            throw new RuntimeException(newPlayer.getPlayerName() + " already exists");
+            throw new PlayerAlreadyAtTableException();
         }
     }
 
     public void deletePlayerFromTableItem(String tableId, String playerName) {
 
         TableItem tableItemToBeUpdated = getTableItemToBeUpdated(tableId);
-        System.out.println();
         tableItemToBeUpdated.getPlayers().removeIf(player -> player.getPlayerName().equals(playerName));
         tableItemsRepo.save(tableItemToBeUpdated);
     }
