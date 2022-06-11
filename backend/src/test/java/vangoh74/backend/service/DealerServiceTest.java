@@ -34,13 +34,13 @@ class DealerServiceTest {
         Deck deckCards = new Deck();
         deckCards.setPokerDeck(listOfCards);
 
-        when(dealerService.deal()).thenReturn(Card.builder()
+        when(dealerService.deal(deckCards)).thenReturn(Card.builder()
                 .rank(Rank.ACE)
                 .suit(Suit.CLUBS)
                 .build());
 
         // WHEN
-        Card actual = dealerService.deal();
+        Card actual = dealerService.deal(deckCards);
 
         // THEN
         Card expected = card_1;

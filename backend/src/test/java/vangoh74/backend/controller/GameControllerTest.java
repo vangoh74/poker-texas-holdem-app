@@ -1,17 +1,18 @@
 package vangoh74.backend.controller;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import vangoh74.backend.HelpMethodsForTests;
 import vangoh74.backend.model.*;
 import vangoh74.backend.repository.TableItemsRepository;
 import vangoh74.backend.security.model.AppUser;
 import vangoh74.backend.security.repository.AppUserRepository;
+import vangoh74.backend.service.DealerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,10 @@ class GameControllerTest {
     @Autowired
     private TableItemsRepository tableItemsRepository;
 
+    private final DealerService dealerService = new DealerService();
+
+    private final HelpMethodsForTests helpMethods = new HelpMethodsForTests(dealerService);
+
     private String dummy_JWT;
 
     @Autowired
@@ -46,15 +51,16 @@ class GameControllerTest {
         dummy_JWT = generateJwt();
     }
 
-    @Disabled
     @Test
     void postToAddPlayerToTableItem_whenPlayerDontExists_shouldAddNewPlayer() {
 
         // GIVEN
+        Deck deck = dealerService.initShuffledDeck();
+        List<Seat> seats = new ArrayList<>();
         TableItem tableItem = TableItem.builder()
-                .roundNumber(0)
                 .bigBlind(6)
                 .maxSize(2)
+                .seats(seats)
                 .build();
 
         TableItem addedTableItem = webTestClient.post()
@@ -70,20 +76,30 @@ class GameControllerTest {
         // WHEN
         assertNotNull(addedTableItem);
 
-        String testPlayerName = "Anton";
-        Player player = getTestPlayer(testPlayerName);
-
         List<Player> players = new ArrayList<>();
-        players.add(player);
+        Player playerToBeAdded = helpMethods.createNewPlayer("Anton", "Anton-Avatar", deck);
+        players.add(playerToBeAdded);
 
-        TableItem updatedTableItem = TableItem.builder().id(addedTableItem.getId()).players(players).build();
+        TableItem updatedTableItem = TableItem.builder()
+                .id(addedTableItem.getId())
+                .bigBlind(6)
+                .maxSize(2)
+                .tableCards(addedTableItem.getTableCards())
+                .players(players)
+                .seats(seats)
+                .build();
 
-        TableItem actual = webTestClient.post()
-                .uri("http://localhost:" + port + "/api/tableitems/{tableId}/players")
+        webTestClient.post()
+                .uri("http://localhost:" + port + "/api/tableitems/" + updatedTableItem.getId() + "/players")
                 .headers(http -> http.setBearerAuth(dummy_JWT))
-                .bodyValue(updatedTableItem)
+                .bodyValue(playerToBeAdded)
                 .exchange()
-                .expectStatus().is2xxSuccessful()
+                .expectStatus().is2xxSuccessful();
+
+        TableItem actual = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/tableitems/" + updatedTableItem.getId())
+                .headers(http -> http.setBearerAuth(dummy_JWT))
+                .exchange()
                 .expectBody(TableItem.class)
                 .returnResult()
                 .getResponseBody();
@@ -91,34 +107,74 @@ class GameControllerTest {
         // THEN
         TableItem expected = TableItem.builder()
                 .id(addedTableItem.getId())
-                .roundNumber(0)
                 .bigBlind(6)
                 .maxSize(2)
+                .roundState(addedTableItem.getRoundState())
+                .tableCards(addedTableItem.getTableCards())
                 .players(players)
+                .seats(seats)
                 .build();
 
         assertEquals(expected, actual);
-
     }
 
     @Test
-    void postToDeletePlayerFromTableItem() {
-    }
+    void postToDeletePlayerFromTableItem_whenPlayerNameIsFound_DeleteThisPlayer() {
 
-    private Player getTestPlayer(String testPlayerName) {
-        Card card_1 = new Card(Rank.ACE, Suit.CLUBS);
-        Card card_2 = new Card(Rank.JACK, Suit.DIAMONDS);
+        // GIVEN
+        Deck deck = dealerService.initShuffledDeck();
+        List<Seat> seats = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        players.add(helpMethods.createNewPlayer("Anton", "Anton-Avatar", deck));
+        players.add(helpMethods.createNewPlayer("Anna", "Anna-Avatar", deck));
 
-        List<Card> playerCards = new ArrayList<>();
-        playerCards.add(card_1);
-        playerCards.add(card_2);
-        Player player = Player.builder()
-                .playerName(testPlayerName)
-                .playerChips(1000)
-                .playerCards(playerCards)
-                .playerImage("Avatar")
+        TableItem tableItem = TableItem.builder()
+                .bigBlind(6)
+                .maxSize(2)
+                .tableCards(helpMethods.createListOfCards(5, deck))
+                .players(players)
+                .seats(seats)
                 .build();
-        return player;
+
+        TableItem addedTableItem = webTestClient.post()
+                .uri("http://localhost:" + port + "/api/tableitems")
+                .headers(http -> http.setBearerAuth(dummy_JWT))
+                .bodyValue(tableItem)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(TableItem.class)
+                .returnResult()
+                .getResponseBody();
+
+        // WHEN
+        assertNotNull(addedTableItem);
+
+        webTestClient.post()
+                .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId() + "/players/Anna")
+                .headers(http -> http.setBearerAuth(dummy_JWT))
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+
+        TableItem actual = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId())
+                .headers(http -> http.setBearerAuth(dummy_JWT))
+                .exchange()
+                .expectBody(TableItem.class)
+                .returnResult()
+                .getResponseBody();
+
+        // THEN
+        players.removeIf(player -> player.getPlayerName().equals("Anna"));
+        TableItem expected = TableItem.builder()
+                .id(addedTableItem.getId())
+                .bigBlind(6)
+                .maxSize(2)
+                .tableCards(addedTableItem.getTableCards())
+                .players(players)
+                .seats(seats)
+                .build();
+
+        assertEquals(expected, actual);
     }
 
     private String generateJwt() {
