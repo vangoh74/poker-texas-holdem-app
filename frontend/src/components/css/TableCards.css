@@ -1,7 +1,15 @@
-.cardBody {
+
+.table-cards {
     display: grid;
-    grid-template-columns: repeat(5, 4rem);
+    grid-template-columns: repeat(5, 3rem);
     gap: .4rem;
+    justify-content: center;
+}
+
+.player-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 2.8rem);
+    gap: .2rem;
     justify-content: center;
 }
 
@@ -30,12 +38,11 @@
 .item-center {
     display: flex;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 2rem;
     margin-left: 0.2rem;
     margin-right: 0.2rem;
     color: deeppink;
     background-color: pink;
-    justify-content: center ;
 }
 
 .item-left-top {
@@ -46,8 +53,8 @@
 
 .item-right-bottom {
     justify-content: flex-start;
-    margin-right: 2px;
-    margin-bottom: 2px;
+    margin-right: 0.2rem;
+    margin-bottom: 0.2rem;
 
     -webkit-transform: rotate(180deg); /* Safari and Chrome */
     -moz-transform: rotate(180deg);   /* Firefox */
@@ -55,4 +62,3 @@
     -o-transform: rotate(180deg);   /* Opera */
     transform: rotate(180deg);
 }
-

@@ -20,11 +20,10 @@ type PlayerProps = {
 
 export default function Player({player} : PlayerProps) {
 
-
     return (
-        <div className={"seat"}>
-            <div >
-                <div className={"player-cards"}>{player.playerCards.map(card => <TableCards card={card} />)}</div>
+        <div className={"seat-container"}>
+            <div className={"player-cards"}>{player.playerCards.map(card => <TableCards card={card} />)}</div>
+            <div className={"player-items"}>
                 <div>{player.playerName}</div>
                 <div>{player.playerChips}</div>
             </div>

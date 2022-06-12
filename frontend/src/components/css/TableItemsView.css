@@ -1,7 +1,4 @@
 
-.game-room {
-
-}
 h4 {
     color: rgba(255, 255, 255, 0.3);
     margin: 1rem;
@@ -52,6 +49,10 @@ h4 {
     padding: 0.5rem;
 }
 
+.table-chips {
+    margin: 20px;
+}
+
 .seat-4 {
     grid-column: 5 / 6;
     grid-row: 2 / 3;
@@ -83,5 +84,39 @@ h4 {
 }
 
 .bg-seats {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.bet-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.7rem;
+    padding: 0.2rem;
+}
+
+.bet-btn {
     background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(255, 255, 255, 0.12) 0 1px 1px 0,
+    rgb(54, 53, 53) 0 0 0 1px,
+    rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(0, 0, 0, 0) 0 0 0 0,
+    rgba(60, 66, 87, 0.08) 0 2px 5px 0;
+
+    color: #dcd4d4;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 16px;
+    width: 70%;
+    min-height: 35px;
+    border: unset;
+    cursor: pointer;
+}
+
+.bet-btn:hover {
+    background-color: rgba(54, 53, 53, 0.99);
+    font-weight: 700;
 }
