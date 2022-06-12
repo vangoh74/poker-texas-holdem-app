@@ -14,10 +14,12 @@ import java.util.NoSuchElementException;
 public class TableItemsService {
 
     private final TableItemsRepository tableItemsRepository;
+    private final DealerService dealerService;
 
     @Autowired
-    public TableItemsService(TableItemsRepository tableItemsRepository) {
+    public TableItemsService(TableItemsRepository tableItemsRepository, DealerService dealerService) {
         this.tableItemsRepository = tableItemsRepository;
+        this.dealerService = dealerService;
     }
 
     public List<TableItem> getTableItems() {
@@ -27,16 +29,18 @@ public class TableItemsService {
     public TableItem addNewTableItem(TableItemDto tableItemDto) {
 
         TableItem newTableItem = new TableItem();
-
-        DealerService dealerService = new DealerService();
+        int maxSize = tableItemDto.getMaxSize();
+        Deck deck = dealerService.initShuffledDeck();
+        List<Seat> seats = new ArrayList<>();
         List<Card> tableCards = new ArrayList<>();
-        dealerService.initShuffledDeck();
 
         // Flop, Turn and River
         for (int i = 0; i < 5; i++) {
-            tableCards.add(dealerService.deal());
+            tableCards.add(dealerService.deal(deck));
         }
 
+        tableItemDto.setMaxSize(maxSize);
+        tableItemDto.setSeats(seats);
         tableItemDto.setTableCards(tableCards);
 
         newTableItem.setRoundNumber(tableItemDto.getRoundNumber());
@@ -44,7 +48,6 @@ public class TableItemsService {
         newTableItem.setBigBlind(tableItemDto.getBigBlind());
         newTableItem.setSmallBlind(tableItemDto.getSmallBlind());
         newTableItem.setMaxSize(tableItemDto.getMaxSize());
-        newTableItem.setFreeSeats(tableItemDto.getFreeSeats());
         newTableItem.setTableChips(tableItemDto.getTableChips());
         newTableItem.setTableCards(tableItemDto.getTableCards());
         newTableItem.setPlayers(tableItemDto.getPlayers());

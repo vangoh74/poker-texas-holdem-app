@@ -8,11 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import vangoh74.backend.HelpMethodsForTests;
 import vangoh74.backend.dto.TableItemDto;
 import vangoh74.backend.model.*;
 import vangoh74.backend.repository.TableItemsRepository;
 import vangoh74.backend.security.model.AppUser;
 import vangoh74.backend.security.repository.AppUserRepository;
+import vangoh74.backend.service.DealerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,11 @@ class TableItemsControllerTest {
     @Autowired
     private TableItemsRepository tableItemsRepository;
 
-    private String dummyJwt;
+    private final DealerService dealerService = new DealerService();
+
+    private final HelpMethodsForTests helpMethods = new HelpMethodsForTests(dealerService);
+
+    private String dummy_JWT;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,36 +50,39 @@ class TableItemsControllerTest {
         tableItemsRepository.deleteAll();
         appUserRepository.deleteAll();
 
-        dummyJwt = generateJwt();
+        dummy_JWT = generateJwt();
     }
 
     @Test
     void getTableItemsTest_ReturnAllTableItemsFromDB() {
 
         // GIVEN
-        Card card_1 = new Card(Rank.ACE, Suit.CLUBS);
-        Card card_2 = new Card(Rank.JACK, Suit.DIAMONDS);
-        Card card_3 = new Card(Rank.TWO, Suit.HEARTS);
-        Card card_4 = new Card(Rank.TEN, Suit.HEARTS);
-
-        List<Card> round_1_cards = new ArrayList<>();
-        round_1_cards.add(card_1);
-        round_1_cards.add(card_2);
-
-        List<Card> round_2_cards = new ArrayList<>();
-        round_2_cards.add(card_3);
-        round_2_cards.add(card_4);
+        Deck deckOfTable_1 = dealerService.initShuffledDeck();
+        List<Seat> table_1_seats = new ArrayList<>();
+        List<Player> table_1_players = new ArrayList<>();
+        table_1_players.add(helpMethods.createNewPlayer("Anton", "Anton-Avatar", deckOfTable_1));
+        table_1_players.add(helpMethods.createNewPlayer("Anna", "Anna-Avatar", deckOfTable_1));
 
         TableItem item_1 = TableItem.builder()
                 .id("1")
-                .roundNumber(1)
-                .tableCards(round_1_cards)
+                .maxSize(2)
+                .tableCards(helpMethods.createListOfCards(5, deckOfTable_1))
+                .players(table_1_players)
+                .seats(table_1_seats)
                 .build();
+
+        Deck deckOfTable_2 = dealerService.initShuffledDeck();
+        List<Seat> table_2_seats = new ArrayList<>();
+        List<Player> table_2_players = new ArrayList<>();
+        table_1_players.add(helpMethods.createNewPlayer("Peter", "Anton-Avatar", deckOfTable_2));
+        table_1_players.add(helpMethods.createNewPlayer("Amelie", "Amelie-Avatar", deckOfTable_2));
 
         TableItem item_2 = TableItem.builder()
                 .id("2")
-                .roundNumber(2)
-                .tableCards(round_2_cards)
+                .maxSize(5)
+                .tableCards(helpMethods.createListOfCards(5, deckOfTable_2))
+                .players(table_2_players)
+                .seats(table_2_seats)
                 .build();
 
         tableItemsRepository.insert(item_1);
@@ -82,7 +91,7 @@ class TableItemsControllerTest {
         // WHEN
         List<TableItem> actual = webTestClient.get()
                 .uri("/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(TableItem.class)
@@ -93,13 +102,18 @@ class TableItemsControllerTest {
         List<TableItem> expected = List.of(
                 TableItem.builder()
                         .id("1")
-                        .roundNumber(1)
-                        .tableCards(round_1_cards)
+                        .maxSize(2)
+                        .tableCards(item_1.getTableCards())
+                        .players(table_1_players)
+                        .seats(table_1_seats)
                         .build(),
+
                 TableItem.builder()
                         .id("2")
-                        .roundNumber(2)
-                        .tableCards(round_2_cards)
+                        .maxSize(5)
+                        .tableCards(item_2.getTableCards())
+                        .players(table_2_players)
+                        .seats(table_2_seats)
                         .build());
 
         assertEquals(expected, actual);
@@ -109,14 +123,22 @@ class TableItemsControllerTest {
     void postNewTableItemTest_returnAddedNewItem() {
 
         // GIVEN
+        Deck deck = dealerService.initShuffledDeck();
+        List<Seat> seats = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        players.add(helpMethods.createNewPlayer("Anton", "Anton-Avatar", deck));
+        players.add(helpMethods.createNewPlayer("Anna", "Anna-Avatar", deck));
+
         TableItem newItem = TableItem.builder()
-                .roundNumber(1)
+                .maxSize(4)
+                .players(players)
+                .seats(seats)
                 .build();
 
         // WHEN
         TableItem actual = webTestClient.post()
                 .uri("/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .bodyValue(newItem)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -129,11 +151,10 @@ class TableItemsControllerTest {
         assertNotNull(actual.getId());
         TableItem expected = TableItem.builder()
                 .id(actual.getId())
-                .roundNumber(1)
-                .roundState(actual.getRoundState())
+                .maxSize(4)
                 .tableCards(actual.getTableCards())
-                .players(actual.getPlayers())
-                .seats(actual.getSeats())
+                .players(players)
+                .seats(seats)
                 .build();
         assertEquals(expected, actual);
     }
@@ -147,7 +168,6 @@ class TableItemsControllerTest {
                 .bigBlind(10)
                 .roundState(RoundState.PRE_FLOP)
                 .maxSize(2)
-                .freeSeats(2)
                 .roundNumber(1)
                 .build();
 
@@ -157,7 +177,7 @@ class TableItemsControllerTest {
         assertNotNull(addedTableItem);
         TableItem actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId())
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
                 .expectBody(TableItem.class)
                 .returnResult()
@@ -170,7 +190,6 @@ class TableItemsControllerTest {
                 .bigBlind(10)
                 .roundState(RoundState.PRE_FLOP)
                 .maxSize(2)
-                .freeSeats(2)
                 .roundNumber(1)
                 .tableCards(actual.getTableCards())
                 .build();
@@ -190,7 +209,7 @@ class TableItemsControllerTest {
 
         webTestClient.post()
                 .uri("http://localhost:" + port + "/api/tableitems")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .bodyValue(tableItemDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -200,7 +219,7 @@ class TableItemsControllerTest {
         // WHEN
         webTestClient.get()
                 .uri("http://localhost:" + port + "/api/tableitems" + "WRONG_ID")
-                .headers(http -> http.setBearerAuth(dummyJwt))
+                .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
         // THEN
                 .expectStatus().is4xxClientError();
