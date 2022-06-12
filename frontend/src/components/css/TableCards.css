@@ -1,22 +1,64 @@
-.cardBody {
-    margin: 0;
+
+.table-cards {
     display: grid;
-    grid-template-columns: repeat(5, 4rem);
-    gap: .5rem;
+    grid-template-columns: repeat(5, 3rem);
+    gap: .4rem;
     justify-content: center;
-    background-color: green;
+}
+
+.player-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 2.8rem);
+    gap: .2rem;
+    justify-content: center;
 }
 
 .card {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     height: 100%;
     width: 100%;
-    border: 1px solid black;
+    border: 0.08rem solid black;
     border-radius: .5rem;
-    align-items: center;
-    font-size: 3rem;
-    color: deeppink;
+
+    gap: 10px;
     user-select: none;
     background-color: white;
+}
+
+.item-left-top, .item-right-bottom {
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.2rem;
+    margin-top: 0.2rem;
+    font-size: 1.1rem;
+    color: deeppink;
+}
+
+.item-center {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+    color: deeppink;
+    background-color: pink;
+}
+
+.item-left-top {
+    margin-left: 0.2rem;
+    margin-top: 0.2rem;
+    justify-content: flex-start;
+}
+
+.item-right-bottom {
+    justify-content: flex-start;
+    margin-right: 0.2rem;
+    margin-bottom: 0.2rem;
+
+    -webkit-transform: rotate(180deg); /* Safari and Chrome */
+    -moz-transform: rotate(180deg);   /* Firefox */
+    -ms-transform: rotate(180deg);   /* IE 9 */
+    -o-transform: rotate(180deg);   /* Opera */
+    transform: rotate(180deg);
 }

@@ -1,3 +1,4 @@
+
 .gameRoom {
     background: rgba(0, 0, 0, 0.85);
     display: flex;
@@ -11,7 +12,7 @@
     color: bisque;
     background-color: #282c34;
     border: solid bisque;
-    margin: 0px 7.5px 0px 5px;
+    margin: 0 7px  0 5px;
     padding: 3px;
     font-size: 16px;
     max-width: 100px;
