@@ -20,7 +20,7 @@ public class GameService {
         this.tableItemsRepo = tableItemsRepo;
     }
 
-    public void addPlayerToTableItem(Player newPlayer, String tableId) throws PlayerAlreadyAtTableException {
+    public TableItem addPlayerToTableItem(Player newPlayer, String tableId) throws PlayerAlreadyAtTableException {
 
         TableItem tableItemToBeUpdated = getTableItemToBeUpdated(tableId);
         List<Player> players =  tableItemToBeUpdated.getPlayers();
@@ -33,17 +33,17 @@ public class GameService {
 
         if((players.stream().noneMatch(predicate)) && (players.size() < tableItemToBeUpdated.getMaxSize())) {
             players.add(newPlayer);
-            tableItemsRepo.save(tableItemToBeUpdated);
+            return tableItemsRepo.save(tableItemToBeUpdated);
         } else {
             throw new PlayerAlreadyAtTableException();
         }
     }
 
-    public void deletePlayerFromTableItem(String tableId, String playerName) {
+    public TableItem deletePlayerFromTableItem(String tableId, String playerName) {
 
         TableItem tableItemToBeUpdated = getTableItemToBeUpdated(tableId);
         tableItemToBeUpdated.getPlayers().removeIf(player -> player.getPlayerName().equals(playerName));
-        tableItemsRepo.save(tableItemToBeUpdated);
+        return tableItemsRepo.save(tableItemToBeUpdated);
     }
 
     public TableItem getTableItemToBeUpdated(String tableId) {

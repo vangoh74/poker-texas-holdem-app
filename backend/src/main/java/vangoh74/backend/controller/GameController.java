@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import vangoh74.backend.apiExceptions.PlayerAlreadyAtTableException;
 import vangoh74.backend.model.Player;
+import vangoh74.backend.model.TableItem;
 import vangoh74.backend.service.GameService;
 
 @RestController
@@ -18,12 +19,12 @@ public class GameController {
     }
 
     @PostMapping("/{tableId}/players")
-    public void postToAddPlayerToTableItem(@RequestBody Player newPlayer, @PathVariable String tableId) throws PlayerAlreadyAtTableException {
-        gameService.addPlayerToTableItem(newPlayer, tableId);
+    public TableItem postToAddPlayerToTableItem(@RequestBody Player newPlayer, @PathVariable String tableId) throws PlayerAlreadyAtTableException {
+        return gameService.addPlayerToTableItem(newPlayer, tableId);
     }
 
     @PostMapping("/{tableId}/players/{playerName}")
-    public void postToDeletePlayerFromTableItem(@PathVariable String tableId, @PathVariable String playerName) {
-        gameService.deletePlayerFromTableItem(tableId, playerName);
+    public TableItem postToDeletePlayerFromTableItem(@PathVariable String tableId, @PathVariable String playerName) {
+        return gameService.deletePlayerFromTableItem(tableId, playerName);
     }
 }
