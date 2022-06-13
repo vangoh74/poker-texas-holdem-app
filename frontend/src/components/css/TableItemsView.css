@@ -1,3 +1,9 @@
+.game-room {
+    display: flex;
+    flex-direction: column;
+    align-content: space-evenly;
+    max-width: 65rem;
+}
 
 h4 {
     color: rgba(255, 255, 255, 0.3);
@@ -10,29 +16,9 @@ h4 {
     gap: 10px;
     margin: 100px 30px;
 
-    height: 580px;
+    height: 500px;
     justify-content: space-evenly;
     align-content: space-evenly;
-}
-
-.seat-1 {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-}
-
-.seat-2 {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-}
-
-.seat-3 {
-    grid-column: 4 / 5;
-    grid-row: 1 / 2;
-}
-
-.seat-10 {
-    grid-column: 1 /  2;
-    grid-row: 2 / 3;
 }
 
 .table {
@@ -47,39 +33,59 @@ h4 {
     border: 1rem solid rgba(255, 255, 255, .4);
     margin: 1rem;
     padding: 0.5rem;
+    min-height: 13rem;
 }
 
 .table-chips {
     margin: 20px;
 }
 
-.seat-4 {
+.player-1 {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+}
+
+.player-2 {
+    grid-column: 3 / 4;
+    grid-row: 4 / 5;
+}
+.player-3 {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.player-4 {
     grid-column: 5 / 6;
     grid-row: 2 / 3;
 }
 
-.seat-9 {
-    grid-column: 1 /  2;
+.player-5 {
+    grid-column: 1 / 2;
     grid-row: 3 / 4;
 }
 
-.seat-5 {
+.player-6 {
     grid-column: 5 / 6;
     grid-row: 3 / 4;
 }
 
-.seat-8 {
+.player-7 {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.player-8 {
     grid-column: 2 /  3;
     grid-row: 4 / 5;
 }
 
-.seat-7 {
-    grid-column: 3 / 4;
-    grid-row: 4 / 5;
+.player-9 {
+    grid-column: 4 /  5;
+    grid-row: 1 / 2;
 }
 
-.seat-6 {
-    grid-column: 4 / 5;
+.player-10 {
+    grid-column: 4 /  5;
     grid-row: 4 / 5;
 }
 
@@ -87,16 +93,17 @@ h4 {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-.bet-container {
+.actions-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 0.7rem;
     padding: 0.2rem;
+    max-width: 15rem;
 }
 
-.bet-btn {
+.actions-btn {
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: rgba(0, 0, 0, 0) 0 0 0 0,
     rgba(0, 0, 0, 0) 0 0 0 0,
@@ -116,7 +123,7 @@ h4 {
     cursor: pointer;
 }
 
-.bet-btn:hover {
+.actions-btn:hover {
     background-color: rgba(54, 53, 53, 0.99);
     font-weight: 700;
 }
