@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class TableItemsServiceTest {
 
     private final TableItemsRepository tableItemsRepository = mock(TableItemsRepository.class);
-    private final DealerService dealerService = mock(DealerService.class);
+    private final DealerService dealerService = new DealerService();
     private final TableItemsService tableItemsService = new TableItemsService(tableItemsRepository);
     private final HelpMethodsForTests helpMethods = new HelpMethodsForTests(dealerService);
 

@@ -10,7 +10,6 @@ import vangoh74.backend.repository.TableItemsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -24,7 +23,7 @@ class GameServiceTest {
     private final GameService gameService = new GameService(tableItemsRepository);
     private final HelpMethodsForTests helpMethods = new HelpMethodsForTests(dealerService);
 
-    @Disabled("I don't know, how to mock it!!")
+    @Disabled
     @Test
     void addPlayerToTableItemTest_whenNewPlayerTakeASeat() {
 
@@ -34,9 +33,11 @@ class GameServiceTest {
         List<Player> players = new ArrayList<>();
         players.add(playerToBeAdded);
 
-        TableItem item = TableItem.builder().maxSize(3).build();
+        TableItem itemToAdd = TableItem.builder()
+                .maxSize(3)
+                .build();
 
-        when(tableItemsRepository.insert(item)).thenReturn(TableItem.builder()
+        when(tableItemsRepository.insert(itemToAdd)).thenReturn(TableItem.builder()
                 .id("1234")
                 .maxSize(3)
                 .build());
@@ -53,8 +54,16 @@ class GameServiceTest {
                 .build());
 
         // WHEN
+        TableItem actual = gameService.addPlayerToTableItem(playerToBeAdded, "1234");
 
         // THEN
+        TableItem expected = TableItem.builder()
+                .id("1234")
+                .maxSize(3)
+                .players(players)
+                .build();
+
+        assertEquals(expected, actual);
 
     }
 

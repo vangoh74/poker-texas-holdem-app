@@ -81,20 +81,15 @@ class GameControllerTest {
                 .players(players)
                 .build();
 
-        webTestClient.post()
+        TableItem actual = webTestClient.post()
                 .uri("http://localhost:" + port + "/api/tableitems/" + updatedTableItem.getId() + "/players")
                 .headers(http -> http.setBearerAuth(dummy_JWT))
                 .bodyValue(playerToBeAdded)
                 .exchange()
-                .expectStatus().is2xxSuccessful();
-
-        TableItem actual = webTestClient.get()
-                .uri("http://localhost:" + port + "/api/tableitems/" + updatedTableItem.getId())
-                .headers(http -> http.setBearerAuth(dummy_JWT))
-                .exchange()
+                .expectStatus().is2xxSuccessful()
                 .expectBody(TableItem.class)
                 .returnResult()
-                .getResponseBody();
+                .getResponseBody();;
 
         // THEN
         TableItem expected = TableItem.builder()
@@ -133,19 +128,14 @@ class GameControllerTest {
         // WHEN
         assertNotNull(addedTableItem);
 
-        webTestClient.post()
+        TableItem actual = webTestClient.post()
                 .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId() + "/players/Anna")
                 .headers(http -> http.setBearerAuth(dummy_JWT))
                 .exchange()
-                .expectStatus().is2xxSuccessful();
-
-        TableItem actual = webTestClient.get()
-                .uri("http://localhost:" + port + "/api/tableitems/" + addedTableItem.getId())
-                .headers(http -> http.setBearerAuth(dummy_JWT))
-                .exchange()
+                .expectStatus().is2xxSuccessful()
                 .expectBody(TableItem.class)
                 .returnResult()
-                .getResponseBody();
+                .getResponseBody();;
 
         // THEN
         players.removeIf(player -> player.getPlayerName().equals("Anna"));
