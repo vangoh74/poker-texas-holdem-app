@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import vangoh74.backend.HelpMethodsForTests;
 import vangoh74.backend.model.Deck;
 import vangoh74.backend.model.Player;
-import vangoh74.backend.model.Seat;
 import vangoh74.backend.model.TableItem;
 import vangoh74.backend.repository.TableItemsRepository;
 
@@ -31,21 +30,15 @@ class GameServiceTest {
 
         // GIVEN
         Deck deck = dealerService.initShuffledDeck();
-        List<Seat> seats = new ArrayList<>();
         Player playerToBeAdded = helpMethods.createNewPlayer("Ana", "Ana-Avatar", deck);
         List<Player> players = new ArrayList<>();
         players.add(playerToBeAdded);
 
-        TableItem item = TableItem.builder()
-                .maxSize(3)
-                .seats(seats)
-                .build();
+        TableItem item = TableItem.builder().maxSize(3).build();
 
         when(tableItemsRepository.insert(item)).thenReturn(TableItem.builder()
                 .id("1234")
                 .maxSize(3)
-                .tableCards(helpMethods.createListOfCards(5, deck))
-                .seats(seats)
                 .build());
 
         TableItem itemToBeUpdated = TableItem.builder()
@@ -57,22 +50,11 @@ class GameServiceTest {
                 .id("1234")
                 .maxSize(3)
                 .players(players)
-                .seats(seats)
                 .build());
 
         // WHEN
-        gameService.addPlayerToTableItem(playerToBeAdded, "1234");
-        Optional<TableItem> actual = tableItemsRepository.findById("1234");
 
         // THEN
-        TableItem expected = TableItem.builder()
-                .id("1234")
-                .maxSize(3)
-                .players(players)
-                .seats(seats)
-                .build();
-
-        assertEquals(expected, actual);
 
     }
 

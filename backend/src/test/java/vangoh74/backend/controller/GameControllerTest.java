@@ -56,12 +56,7 @@ class GameControllerTest {
 
         // GIVEN
         Deck deck = dealerService.initShuffledDeck();
-        List<Seat> seats = new ArrayList<>();
-        TableItem tableItem = TableItem.builder()
-                .bigBlind(6)
-                .maxSize(2)
-                .seats(seats)
-                .build();
+        TableItem tableItem = TableItem.builder().maxSize(2).build();
 
         TableItem addedTableItem = webTestClient.post()
                 .uri("http://localhost:" + port + "/api/tableitems")
@@ -82,11 +77,8 @@ class GameControllerTest {
 
         TableItem updatedTableItem = TableItem.builder()
                 .id(addedTableItem.getId())
-                .bigBlind(6)
                 .maxSize(2)
-                .tableCards(addedTableItem.getTableCards())
                 .players(players)
-                .seats(seats)
                 .build();
 
         webTestClient.post()
@@ -107,12 +99,8 @@ class GameControllerTest {
         // THEN
         TableItem expected = TableItem.builder()
                 .id(addedTableItem.getId())
-                .bigBlind(6)
                 .maxSize(2)
-                .roundState(addedTableItem.getRoundState())
-                .tableCards(addedTableItem.getTableCards())
                 .players(players)
-                .seats(seats)
                 .build();
 
         assertEquals(expected, actual);
@@ -123,17 +111,13 @@ class GameControllerTest {
 
         // GIVEN
         Deck deck = dealerService.initShuffledDeck();
-        List<Seat> seats = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         players.add(helpMethods.createNewPlayer("Anton", "Anton-Avatar", deck));
         players.add(helpMethods.createNewPlayer("Anna", "Anna-Avatar", deck));
 
         TableItem tableItem = TableItem.builder()
-                .bigBlind(6)
                 .maxSize(2)
-                .tableCards(helpMethods.createListOfCards(5, deck))
                 .players(players)
-                .seats(seats)
                 .build();
 
         TableItem addedTableItem = webTestClient.post()
@@ -167,11 +151,8 @@ class GameControllerTest {
         players.removeIf(player -> player.getPlayerName().equals("Anna"));
         TableItem expected = TableItem.builder()
                 .id(addedTableItem.getId())
-                .bigBlind(6)
                 .maxSize(2)
-                .tableCards(addedTableItem.getTableCards())
                 .players(players)
-                .seats(seats)
                 .build();
 
         assertEquals(expected, actual);

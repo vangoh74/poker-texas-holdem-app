@@ -58,7 +58,6 @@ class TableItemsControllerTest {
 
         // GIVEN
         Deck deckOfTable_1 = dealerService.initShuffledDeck();
-        List<Seat> table_1_seats = new ArrayList<>();
         List<Player> table_1_players = new ArrayList<>();
         table_1_players.add(helpMethods.createNewPlayer("Anton", "Anton-Avatar", deckOfTable_1));
         table_1_players.add(helpMethods.createNewPlayer("Anna", "Anna-Avatar", deckOfTable_1));
@@ -66,13 +65,10 @@ class TableItemsControllerTest {
         TableItem item_1 = TableItem.builder()
                 .id("1")
                 .maxSize(2)
-                .tableCards(helpMethods.createListOfCards(5, deckOfTable_1))
                 .players(table_1_players)
-                .seats(table_1_seats)
                 .build();
 
         Deck deckOfTable_2 = dealerService.initShuffledDeck();
-        List<Seat> table_2_seats = new ArrayList<>();
         List<Player> table_2_players = new ArrayList<>();
         table_1_players.add(helpMethods.createNewPlayer("Peter", "Anton-Avatar", deckOfTable_2));
         table_1_players.add(helpMethods.createNewPlayer("Amelie", "Amelie-Avatar", deckOfTable_2));
@@ -80,9 +76,7 @@ class TableItemsControllerTest {
         TableItem item_2 = TableItem.builder()
                 .id("2")
                 .maxSize(5)
-                .tableCards(helpMethods.createListOfCards(5, deckOfTable_2))
                 .players(table_2_players)
-                .seats(table_2_seats)
                 .build();
 
         tableItemsRepository.insert(item_1);
@@ -103,17 +97,13 @@ class TableItemsControllerTest {
                 TableItem.builder()
                         .id("1")
                         .maxSize(2)
-                        .tableCards(item_1.getTableCards())
                         .players(table_1_players)
-                        .seats(table_1_seats)
                         .build(),
 
                 TableItem.builder()
                         .id("2")
                         .maxSize(5)
-                        .tableCards(item_2.getTableCards())
                         .players(table_2_players)
-                        .seats(table_2_seats)
                         .build());
 
         assertEquals(expected, actual);
@@ -124,7 +114,6 @@ class TableItemsControllerTest {
 
         // GIVEN
         Deck deck = dealerService.initShuffledDeck();
-        List<Seat> seats = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         players.add(helpMethods.createNewPlayer("Anton", "Anton-Avatar", deck));
         players.add(helpMethods.createNewPlayer("Anna", "Anna-Avatar", deck));
@@ -132,7 +121,6 @@ class TableItemsControllerTest {
         TableItem newItem = TableItem.builder()
                 .maxSize(4)
                 .players(players)
-                .seats(seats)
                 .build();
 
         // WHEN
@@ -152,9 +140,7 @@ class TableItemsControllerTest {
         TableItem expected = TableItem.builder()
                 .id(actual.getId())
                 .maxSize(4)
-                .tableCards(actual.getTableCards())
                 .players(players)
-                .seats(seats)
                 .build();
         assertEquals(expected, actual);
     }
@@ -165,10 +151,7 @@ class TableItemsControllerTest {
         // GIVEN
         TableItem tableItem = TableItem.builder()
                 .id("123")
-                .bigBlind(10)
-                .roundState(RoundState.PRE_FLOP)
                 .maxSize(2)
-                .roundNumber(1)
                 .build();
 
         TableItem addedTableItem = tableItemsRepository.insert(tableItem);
@@ -187,11 +170,7 @@ class TableItemsControllerTest {
         assertNotNull(actual);
         TableItem expected = TableItem.builder()
                 .id(actual.getId())
-                .bigBlind(10)
-                .roundState(RoundState.PRE_FLOP)
                 .maxSize(2)
-                .roundNumber(1)
-                .tableCards(actual.getTableCards())
                 .build();
         Assertions.assertEquals(expected, actual);
     }
@@ -200,12 +179,7 @@ class TableItemsControllerTest {
     void getTableItemsByTableIdTest_whenTableIdIsNotValid_shouldThrowException() {
 
         // GIVEN
-        TableItemDto tableItemDto = TableItemDto.builder()
-                .bigBlind(10)
-                .maxSize(2)
-                .freeSeats(2)
-                .roundNumber(1)
-                .build();
+        TableItemDto tableItemDto = TableItemDto.builder().maxSize(2).build();
 
         webTestClient.post()
                 .uri("http://localhost:" + port + "/api/tableitems")

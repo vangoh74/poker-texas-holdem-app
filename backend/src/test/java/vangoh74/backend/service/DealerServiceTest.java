@@ -43,7 +43,6 @@ class DealerServiceTest {
         Card actual = dealerService.deal(deckCards);
 
         // THEN
-        Card expected = card_1;
-        assertEquals(expected, actual);
+        assertEquals(card_1, actual);
     }
 }
