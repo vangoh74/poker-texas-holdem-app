@@ -9,23 +9,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Builder
-@Document(collection = "tableItems")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Builder
+@Document(collection = "tableItems")
 public class TableItem {
 
     @Id
     private String id;
     private int maxSize;
-    private int roundNumber;
-    private RoundState roundState;
-    private int bigBlind;
-    private int smallBlind;
-    private double tableChips;
-    private List<Card> tableCards;
+    private CurrentRound currentRound;
     private List<Player> players;
-    private List<Seat> seats;
 
 }
