@@ -31,6 +31,4 @@ export type TableItem = {
     tableCards: Card[]
     players: Player[]
     seats: Seat[]
-
-
 }
